@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "serve": "npx kill-port 3000 && npm run dev",
     "dev": "webpack serve"
   },
   "repository": {

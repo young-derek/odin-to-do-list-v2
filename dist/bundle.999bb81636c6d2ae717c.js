@@ -2,24 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/generate.js":
-/*!*************************!*\
-  !*** ./src/generate.js ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function generate() {
-  return "generated text";
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (generate);
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
 /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
@@ -39,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --light-neutral-color: #ddd;\n}\n\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n}\n\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n}\n\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n#modal {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255,255,255,0.5);\n}\n\n#modal-card {\n    position: relative;\n    max-width: 300px;\n    border-radius: 5px;\n    margin: 20% auto;\n    border: 2px solid red;\n}", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;IACT,sBAAsB;IACtB,gBAAgB;IAChB,yCAAyC;AAC7C;;AAEA;IACI,wBAAwB;IACxB,yBAAyB;IACzB,yBAAyB;IACzB,0BAA0B;IAC1B,4BAA4B;IAC5B,2BAA2B;AAC/B;;AAEA;IACI,aAAa;IACb,8BAA8B;IAC9B,iCAAiC;IACjC,iBAAiB;AACrB;;AAEA;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;AACvC;;AAEA;IACI,eAAe;IACf,kBAAkB;IAClB,4CAA4C;AAChD;;AAEA;IACI,eAAe;IACf,kBAAkB;AACtB;;AAEA;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;AACvC;;AAEA;IACI,eAAe;IACf,MAAM;IACN,OAAO;IACP,WAAW;IACX,YAAY;IACZ,uCAAuC;AAC3C;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,qBAAqB;AACzB","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --light-neutral-color: #ddd;\n}\n\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n}\n\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n}\n\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n#modal {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255,255,255,0.5);\n}\n\n#modal-card {\n    position: relative;\n    max-width: 300px;\n    border-radius: 5px;\n    margin: 20% auto;\n    border: 2px solid red;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -628,13 +610,10 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _generate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./generate */ "./src/generate.js");
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 
-
-console.log((0,_generate__WEBPACK_IMPORTED_MODULE_0__["default"])());
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundle.c2ffd19a97095a2ee375.js.map
+//# sourceMappingURL=bundle.999bb81636c6d2ae717c.js.map
