@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "serve": "npx kill-port 3000 && npm run dev",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
