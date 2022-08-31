@@ -14,7 +14,10 @@
             </header>
 
             <!-- PROJECTS -->
-            <section id="projects-section-container" class="hidden add-back-projects-section">
+            <section
+                id="projects-section-container"
+                class="hidden add-back-projects-section"
+            >
                 <h2 id="tasks-due-today">Today</h2>
                 <h2 id="tasks-due-this-week">This Week</h2>
                 <h2 id="projects-section-header">Projects:</h2>
@@ -34,14 +37,18 @@
                 <button id="add-task-button">+ Add New Task</button>
                 <ul id="tasks-list">
                     <li class="task-item">
-                        <input type="checkbox" class="task-completed-checkbox">
-                        <div class="task-item-title">Task 1</div>
+                        <input
+                            type="checkbox"
+                            class="task-completed-checkbox"
+                        />
+                        <div class="task-item-title">Take out the trash</div>
                         <div class="task-item-due-date">2022-10-18</div>
                         <div class="task-item-priority">High Priority</div>
-                        <button class="task-item-more-info-button">View Details</button>
+                        <button class="task-item-more-info-button">
+                            View Details
+                        </button>
                         <button class="task-item-edit-button">Edit</button>
                         <button class="task-item-remove-button">Remove</button>
-                        <div class="stuff">stuff</div>
                     </li>
                 </ul>
             </section>
@@ -57,7 +64,61 @@
         <!-- MODAL -->
         <div id="modal">
             <div id="modal-card">
-                <div id="modal-header"></div>
+                <div id="modal-header">
+                    <h2 class="modal-header-title">Add Task/Project</h2>
+                    <button class="modal-close-button">Close</button>
+                </div>
+
+                <!-- MODAL CONTENT -->
+                <div class="modal-content">
+                    <!-- TASK & PROJECT TITLE INPUT -->
+                    <div class="modal-add-title">
+                        <label for="modal-title-input">Title</label>
+                        <input
+                            type="text"
+                            id="modal-title-input"
+                            name="modal-title-input"
+                            autocomplete="off"
+                        />
+                    </div>
+
+                    <!-- TASK ADDITION -->
+                    <div class="modal-add-task">
+                        <div class="modal-task-description">
+                            <label for="modal-task-description-input"
+                                >Description</label
+                            >
+                            <textarea
+                                name="modal-task-description-input"
+                                id="modal-task-description-input"
+                                cols="30"
+                                rows="5"
+                            ></textarea>
+                        </div>
+
+                        <div class="modal-task-due-date">
+                            <label for="modal-task-due-date-input">Due Date</label>
+                            <input type="date" id="modal-task-due-date-input" />
+                        </div>
+                        <div class="modal-task-priority">
+                            <label for="modal-task-priority-input">Priority</label>
+                            <select name="modal-task-priority-select" id="modal-task-priority-select">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- VIEW TASK INFO -->
+                    <div class="modal-view-info hide">
+                        
+                    </div>
+                    <!-- MODAL BUTTONS -->
+                    <div class="modal-buttons">
+                        <button class="modal-submit-button">Submit</button>
+                        <button class="modal-cancel-button">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
