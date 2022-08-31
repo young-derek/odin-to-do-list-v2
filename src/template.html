@@ -8,27 +8,53 @@
     </head>
     <body>
         <div id="main-container">
+            <!-- HEADER -->
             <header>
                 <h1>To Do List!</h1>
             </header>
-            <section id="projects-section-container">
+
+            <!-- PROJECTS -->
+            <section id="projects-section-container" class="hidden add-back-projects-section">
+                <h2 id="tasks-due-today">Today</h2>
+                <h2 id="tasks-due-this-week">This Week</h2>
                 <h2 id="projects-section-header">Projects:</h2>
                 <button id="add-project-button">+ Add New Project</button>
                 <ul id="projects-list">
-                    <li></li>
+                    <li class="project-item">
+                        <div class="project-title">Project 1</div>
+                        <button class="project-edit-button">Edit</button>
+                        <button class="project-remove-button">Remove</button>
+                    </li>
                 </ul>
             </section>
+
+            <!-- TASKS -->
             <section id="tasks-section-container">
                 <h2 id="tasks-section-header">Tasks:</h2>
                 <button id="add-task-button">+ Add New Task</button>
-                <ul id="tasks-list"></ul>
+                <ul id="tasks-list">
+                    <li class="task-item">
+                        <input type="checkbox" class="task-completed-checkbox">
+                        <div class="task-item-title">Task 1</div>
+                        <div class="task-item-due-date">2022-10-18</div>
+                        <div class="task-item-priority">High Priority</div>
+                        <button class="task-item-more-info-button">View Details</button>
+                        <button class="task-item-edit-button">Edit</button>
+                        <button class="task-item-remove-button">Remove</button>
+                        <div class="stuff">stuff</div>
+                    </li>
+                </ul>
             </section>
+
+            <!-- FOOTER -->
             <footer>
                 <p>
                     Created by Derek Y for The Odin Project - To Do List Project
                 </p>
             </footer>
         </div>
+
+        <!-- MODAL -->
         <div id="modal">
             <div id="modal-card">
                 <div id="modal-header"></div>

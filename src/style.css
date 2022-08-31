@@ -1,9 +1,11 @@
+/*----- GLOBALS -----*/
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     list-style: none;
     font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
 }
 
 :root {
@@ -12,9 +14,11 @@
     --third-color: lightcoral;
     --dark-neutral-color: #222;
     --medium-neutral-color: #999;
+    --medium-light-neutral-color: #aaa;
     --light-neutral-color: #ddd;
 }
 
+/*----- MAIN -----*/
 #main-container {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -22,42 +26,85 @@
     min-height: 100vh;
 }
 
+/*----- HEADER -----*/
 header {
     grid-row: 1 / 2;
     grid-column: 1 / 3;
     background-color: var(--main-color);
+    display: flex;
+    align-items: center;
 }
 
+/*----- PROJECTS -----*/
 #projects-section-container {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
     background-color: var(--light-neutral-color);
+    min-height: calc(50vh - 4rem);
 }
 
+#projects-section-container * {
+    padding: 3px;
+    margin: 3px;
+}
+
+.project-item {
+    background-color: var(--medium-light-neutral-color);
+}
+
+/*----- TASKS -----*/
 #tasks-section-container {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
+    min-height: calc(50vh - 4rem);
+
 }
 
+/*----- FOOTER -----*/
 footer {
     grid-row: 3 / 4;
     grid-column: 1 / 3;
     background-color: var(--main-color);
 }
 
+/*----- MODAL -----*/
 #modal {
+    visibility: hidden;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #modal-card {
     position: relative;
-    max-width: 300px;
+    width: clamp(35ch, 70%, 50ch);
+    height: 300px;
     border-radius: 5px;
-    margin: 20% auto;
+    margin: auto;
+    top: 25%;
     border: 2px solid red;
+}
+
+/*----- CONDITIONAL -----*/
+
+/*----- NARROW WIDTH -----*/
+
+@media only screen and (max-width: 768px) {
+    #main-container {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 5rem auto auto 3rem;
+
+    }
+
+    header,
+    #project-section-container,
+    #tasks-section-container,
+    footer {
+        grid-row: auto;
+        grid-column: auto;
+    }
 }
