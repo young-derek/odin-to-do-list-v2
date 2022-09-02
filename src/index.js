@@ -35,5 +35,3 @@ import './style.css';
 
 // Run update UI
 // dom.updateUi(toDoList, 0, 0, 0);
-
-console.log(toDoList)

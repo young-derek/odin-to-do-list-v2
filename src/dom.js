@@ -13,11 +13,9 @@ const dom = (() => {
         updateProjectListDisplay(toDoList);
 
         // Update the task list
-        updateTaskListDisplay(
+        displayProjectTasks(
             toDoList,
             selectedProject,
-            clickedToday,
-            clickedThisWeek
         );
     };
 
@@ -62,44 +60,47 @@ const dom = (() => {
         });
     };
 
-    // UPDATE TASK LIST DISPLAY
-    const updateTaskListDisplay = (
-        toDoList,
-        selectedProject,
-        clickedToday,
-        clickedThisWeek
-    ) => {
-        const taskList = document.querySelector('#task-list');
-        taskList.innerHTML = '';
+    // DISPLAY TODAY'S TASKS
+    function displayTodaysTasks(toDoList) {
+        let taskArray = [];
+        const today = new Date().toISOString().slice(0, 10);
 
-        let taskIndex = 0;
+        toDoList.forEach((project) => {
+            taskArray.push(
+                ...project.tasks.filter((task) => task.dueDate === today)
+            );
+        });
+        createTaskElements(toDoList, taskArray);
+    }
+    // DISPLAY THIS WEEK'S TASKS
+    function displayWeeksTasks(toDoList) {
         let taskArray = [];
         const today = new Date().toISOString().slice(0, 10);
         let nextWeek = new Date();
         nextWeek.setDate(nextWeek.getDate() + 7);
         nextWeek = nextWeek.toISOString().slice(0, 10);
 
-        // Determine task array to iterate over and append to DOM
-        if (clickedToday) {
-            toDoList.forEach((project) => {
-                taskArray.push(
-                    ...project.tasks.filter((task) => task.dueDate === today)
-                );
-            });
-        } else if (clickedThisWeek) {
-            toDoList.forEach((project) => {
-                taskArray.push(
-                    ...project.tasks.filter(
-                        (task) =>
-                            task.dueDate >= today && task.dueDate <= nextWeek
-                    )
-                );
-            });
-        } else {
-            if (toDoList.length > 0) {
-                taskArray = toDoList[selectedProject].tasks;
-            }
-        }
+        toDoList.forEach((project) => {
+            taskArray.push(
+                ...project.tasks.filter(
+                    (task) =>
+                        task.dueDate >= today && task.dueDate <= nextWeek
+                )
+            );
+        });
+
+        createTaskElements(toDoList, taskArray);
+    }
+    // DISPLAY SELECTED PROJECT'S TASKS - todo
+    function displayProjectTasks(toDoList, selectedProject) {
+        createTaskElements(toDoList, toDoList[selectedProject].tasks);
+    }
+
+    // CREATE TASK DOM ELEMENTS
+    function createTaskElements(toDoList, taskArray) {
+        const taskList = document.querySelector('#task-list');
+        taskList.innerHTML = '';
+        let taskIndex = 0;
 
         // If there are any projects in the to do list
         if (toDoList.length > 0) {
@@ -146,7 +147,7 @@ const dom = (() => {
                 taskList.append(taskItem);
             });
         }
-    };
+    }
 
     // SHOW ELEMENTS
     function showElements() {
@@ -192,10 +193,14 @@ const dom = (() => {
         modalViewTaskDueDateInfo,
         modalViewTaskPriorityInfo
     ) {
-        modalViewTaskTitleInfo.textContent = toDoList[selectedProject].tasks[taskIndex].title;
-        modalViewTaskDescriptionInfo.textContent = toDoList[selectedProject].tasks[taskIndex].description;
-        modalViewTaskDueDateInfo.textContent = toDoList[selectedProject].tasks[taskIndex].dueDate;
-        modalViewTaskPriorityInfo.textContent = toDoList[selectedProject].tasks[taskIndex].priority;
+        modalViewTaskTitleInfo.textContent =
+            toDoList[selectedProject].tasks[taskIndex].title;
+        modalViewTaskDescriptionInfo.textContent =
+            toDoList[selectedProject].tasks[taskIndex].description;
+        modalViewTaskDueDateInfo.textContent =
+            toDoList[selectedProject].tasks[taskIndex].dueDate;
+        modalViewTaskPriorityInfo.textContent =
+            toDoList[selectedProject].tasks[taskIndex].priority;
     }
 
     // SHOW PROJECT DETAILS IN PROJECT EDIT MODAL
@@ -208,11 +213,13 @@ const dom = (() => {
         updateUi,
         showElements,
         hideElements,
-        updateTaskListDisplay,
         updateProjectListDisplay,
         showEditTaskDetails,
         showEditProjectDetails,
-        showViewTaskDetails
+        showViewTaskDetails,
+        displayTodaysTasks,
+        displayWeeksTasks,
+        displayProjectTasks,
     };
 })();
 

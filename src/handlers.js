@@ -2,38 +2,38 @@ import dom from './dom.js';
 import tasks from './tasks.js';
 import projects from './projects.js';
 
-const handlers = (() => {
-    const toDoList = [
-        {
-            title: 'Big project',
-            tasks: [
-                {
-                    title: 'Take out the trash',
-                    description: 'I have to take out the trash on Sunday',
-                    dueDate: '2022-09-02',
-                    priority: 'High',
-                },
-                {
-                    title: 'Donate clothes',
-                    description: 'Donate unused clothes to Value Village.',
-                    dueDate: '2022-09-07',
-                    priority: 'Low',
-                },
-            ],
-        },
-        {
-            title: 'Mini project',
-            tasks: [
-                {
-                    title: 'Go for a jog',
-                    description: 'Jog 4km in 20 minutes.',
-                    dueDate: '2022-09-15',
-                    priority: 'Medium',
-                },
-            ],
-        },
-    ];
+const toDoList = [
+    {
+        title: 'Big project',
+        tasks: [
+            {
+                title: 'Take out the trash',
+                description: 'I have to take out the trash on Sunday',
+                dueDate: '2022-09-02',
+                priority: 'High',
+            },
+            {
+                title: 'Donate clothes',
+                description: 'Donate unused clothes to Value Village.',
+                dueDate: '2022-09-07',
+                priority: 'Low',
+            },
+        ],
+    },
+    {
+        title: 'Mini project',
+        tasks: [
+            {
+                title: 'Go for a jog',
+                description: 'Jog 4km in 20 minutes.',
+                dueDate: '2022-09-15',
+                priority: 'Medium',
+            },
+        ],
+    },
+];
 
+const handlers = (() => {
     const modal = document.querySelector('#modal');
     const modalHeaderTitle = document.querySelector('#modal-header-title');
     const modalTitleDiv = document.querySelector('#modal-title-div');
@@ -76,6 +76,9 @@ const handlers = (() => {
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
+        // Update the project index
+        projectIndex = toDoList.length;
+
         // Reset the modal form
         modal.reset();
 
@@ -106,15 +109,14 @@ const handlers = (() => {
 
     // SHOW TASKS DUE TODAY
     tasksDueToday.addEventListener('click', () => {
-        dom.updateTaskListDisplay(toDoList, selectedProject, true, false);
+        dom.displayTodaysTasks(toDoList);
     });
 
     // SHOW TASKS DUE THIS WEEK
     tasksDueThisWeek.addEventListener('click', () => {
-        dom.updateTaskListDisplay(toDoList, selectedProject, false, true);
+        dom.displayWeeksTasks(toDoList);
     });
 
-    // REMOVE TASK
     // SUBMIT NEW PROJECT - todo
     // SUBMIT NEW TASK - todo
 
@@ -123,10 +125,10 @@ const handlers = (() => {
         // SHOW A PROJECT'S TASKS, UPDATE SELECTED PROJECT
         if (event.target.classList.contains('project-title')) {
             selectedProject = event.target.parentElement.dataset.index;
-            dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+            dom.displayProjectTasks(toDoList, selectedProject);
         } else if (event.target.classList.contains('project-item')) {
             selectedProject = event.target.dataset.index;
-            dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+            dom.displayProjectTasks(toDoList, selectedProject);
         }
 
         // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
@@ -146,8 +148,11 @@ const handlers = (() => {
 
         // REMOVE A PROJECT
         if (event.target.classList.contains('project-remove-button')) {
+            // Update the task index
+            taskIndex = event.target.parentElement.dataset.index;
+            
             // Remove the project from the toDoList array
-            toDoList.splice(event.target.parentElement.dataset.index, 1);
+            toDoList.splice(taskIndex, 1);
 
             // Update the selected project if necessary
             if (selectedProject > toDoList.length - 1) {
@@ -161,7 +166,7 @@ const handlers = (() => {
 
     // TASK LIST HANDLERS
     taskList.addEventListener('click', (event) => {
-        // SHOW TASK DETAILS MODAL
+        // VIEW TASK DETAILS
         if (event.target.classList.contains('task-details-button')) {
             // Update the task index
             taskIndex = event.target.parentElement.dataset.index;
@@ -182,7 +187,7 @@ const handlers = (() => {
             modalHeaderTitle.textContent = 'View Task Details';
         }
 
-        // SHOW TASK EDIT MODAL, UPDATE TASK EDIT INDEX
+        // EDIT TASK
         if (event.target.classList.contains('task-edit-button')) {
             // Update the task edit index
             taskIndex = event.target.parentElement.dataset.index;
@@ -209,7 +214,24 @@ const handlers = (() => {
                 modalTaskPrioritySelect
             );
         }
+
+        // REMOVE TASK
+        if (event.target.classList.contains('task-remove-button')) {
+            // Update the task index
+            taskIndex = event.target.parentElement.dataset.index;
+
+            // Remove the task from the selected project
+            toDoList[selectedProject].tasks.splice(taskIndex, 1);
+
+            // Update the task list
+            dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+        }
     });
+
+    // UPDATE UI ON PAGE LOAD
+    (() => {
+        dom.updateUi(toDoList, selectedProject, false, false);
+    })();
 })();
 
 export default handlers;
