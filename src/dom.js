@@ -9,7 +9,10 @@ const dom = (() => {
         clickedToday,
         clickedThisWeek
     ) => {
+        // Update the project list
         updateProjectListDisplay(toDoList);
+
+        // Update the task list
         updateTaskListDisplay(
             toDoList,
             selectedProject,
@@ -94,51 +97,56 @@ const dom = (() => {
                 );
             });
         } else {
-            taskArray = toDoList[selectedProject].tasks;
+            if (toDoList.length > 0) {
+                taskArray = toDoList[selectedProject].tasks;
+            }
         }
 
-        // Create task items in the DOM
-        taskArray.forEach((task) => {
-            const taskItem = document.createElement('li');
-            const taskCheckbox = document.createElement('input');
-            const taskTitle = document.createElement('p');
-            const taskDueDate = document.createElement('p');
-            const taskDetailsButton = document.createElement('button');
-            const taskEditButton = document.createElement('button');
-            const taskRemoveButton = document.createElement('button');
+        // If there are any projects in the to do list
+        if (toDoList.length > 0) {
+            // Create task items in the DOM
+            taskArray.forEach((task) => {
+                const taskItem = document.createElement('li');
+                const taskCheckbox = document.createElement('input');
+                const taskTitle = document.createElement('p');
+                const taskDueDate = document.createElement('p');
+                const taskDetailsButton = document.createElement('button');
+                const taskEditButton = document.createElement('button');
+                const taskRemoveButton = document.createElement('button');
 
-            taskItem.classList.add('task-item');
-            taskCheckbox.classList.add('task-checkbox');
-            taskTitle.classList.add('task-title');
-            taskDueDate.classList.add('task-due-date');
-            taskDetailsButton.classList.add('task-details-button');
-            taskEditButton.classList.add('task-edit-button');
-            taskRemoveButton.classList.add('task-remove-button');
+                taskItem.classList.add('task-item');
+                taskCheckbox.classList.add('task-checkbox');
+                taskTitle.classList.add('task-title');
+                taskDueDate.classList.add('task-due-date');
+                taskDetailsButton.classList.add('task-details-button');
+                taskEditButton.classList.add('task-edit-button');
+                taskRemoveButton.classList.add('task-remove-button');
 
-            taskTitle.textContent = task.title;
-            taskDueDate.textContent = task.dueDate;
-            taskDetailsButton.textContent = 'View Details';
-            taskEditButton.textContent = 'Edit';
-            taskRemoveButton.textContent = 'Remove';
+                taskTitle.textContent = task.title;
+                taskDueDate.textContent = task.dueDate;
+                taskDetailsButton.textContent = 'View Details';
+                taskEditButton.textContent = 'Edit';
+                taskRemoveButton.textContent = 'Remove';
 
-            taskCheckbox.setAttribute('type', 'checkbox');
+                taskCheckbox.setAttribute('type', 'checkbox');
 
-            taskItem.dataset.index = taskIndex;
+                taskItem.dataset.index = taskIndex;
 
-            // Increment the task index
-            taskIndex++;
+                // Increment the task index
+                taskIndex++;
 
-            // Append task to the DOM
-            taskItem.append(
-                taskCheckbox,
-                taskTitle,
-                taskDueDate,
-                taskDetailsButton,
-                taskEditButton,
-                taskRemoveButton
-            );
-            taskList.append(taskItem);
-        });
+                // Append task to the DOM
+                taskItem.append(
+                    taskCheckbox,
+                    taskTitle,
+                    taskDueDate,
+                    taskDetailsButton,
+                    taskEditButton,
+                    taskRemoveButton
+                );
+                taskList.append(taskItem);
+            });
+        }
     };
 
     // SHOW ELEMENTS
@@ -146,14 +154,17 @@ const dom = (() => {
         Array.from(arguments).forEach((argument) => {
             argument.classList.remove('hide');
         });
-    }
+    };
 
     // HIDE ELEMENTS
-    const hideElements = () => {
+    function hideElements() {
         Array.from(arguments).forEach((argument) => {
             argument.classList.add('hide');
         });
     };
+
+    // REMOVE A PROJECT
+    const removeProject = (projectIndex) => {};
 
     // Return functions
     return {

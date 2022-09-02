@@ -43,13 +43,11 @@ const handlers = (() => {
     const addProjectButton = document.querySelector('#add-project-button');
     const addTaskButton = document.querySelector('#add-task-button');
     const projectList = document.querySelector('#project-list');
-    const projectsSectionContainer = document.querySelector(
-        '#projects-section-container'
-    );
     const tasksDueToday = document.querySelector('#tasks-due-today');
     const tasksDueThisWeek = document.querySelector('#tasks-due-this-week');
 
     let selectedProject = 0;
+    let editIndex = 0;
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
@@ -81,30 +79,59 @@ const handlers = (() => {
         modalHeaderTitle.textContent = 'Add Task';
     });
 
-    // DISPLAY PROJECT EDIT MODAL - todo
+    // SHOW TASKS DUE TODAY
+    tasksDueToday.addEventListener('click', () => {
+        dom.updateTaskListDisplay(toDoList, selectedProject, true, false);
+    });
+
+    // SHOW TASKS DUE THIS WEEK
+    tasksDueThisWeek.addEventListener('click', () => {
+        dom.updateTaskListDisplay(toDoList, selectedProject, false, true);
+    });
+
+    // DISPLAY PROJECT EDIT MODAL
+
     // DISPLAY TASK EDIT MODAL - todo
     // DISPLAY TASK DETAILS MODAL - todo
     // SUBMIT NEW PROJECT - todo
     // SUBMIT NEW TASK - todo
 
-    // PROJECT SECTION SELECTION FUNCTIONALITY
-    projectsSectionContainer.addEventListener('click', (event) => {
-        // If user clicks Today, display today's tasks
-        if (event.target === tasksDueToday) {
-            dom.updateTaskListDisplay(toDoList, selectedProject, true, false);
-        }
-
-        // If user clicks This Week, display this week's tasks
-        else if (event.target === tasksDueThisWeek) {
-            dom.updateTaskListDisplay(toDoList, selectedProject, false, true);
-        }
-
-        // If target is a project, display the project's tasks
-        else if (
-            event.target.classList.contains('project-title')
-        ) {
+    // PROJECT LIST HANDLERS
+    projectList.addEventListener('click', (event) => {
+        // SHOW A PROJECT'S TASKS
+        if (event.target.classList.contains('project-title')) {
             selectedProject = event.target.parentElement.dataset.index;
             dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+        } else if (event.target.classList.contains('project-item')) {
+            selectedProject = event.target.dataset.index;
+            dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+        }
+
+        // SHOW EDIT PROJECT MODAL
+        if (event.target.classList.contains('project-edit-button')) {
+            editIndex = event.target.parentElement.dataset.index;
+            dom.showElements(
+                modal,
+                modalTitleDiv,
+                modalTaskInput,
+                modalSubmitButton
+            );
+            modalHeaderTitle.textContent = 'Edit Task';
+        }
+
+        // REMOVE A PROJECT
+        if (event.target.classList.contains('project-remove-button')) {
+            
+            // Splice the project out of the array
+            toDoList.splice(event.target.parentElement.dataset.index, 1);
+            
+            // Update the selected project if necessary
+            if (selectedProject > toDoList.length - 1) {
+                selectedProject--;
+            }
+
+            // Update the UI
+            dom.updateUi(toDoList, selectedProject, false, false);
         }
     });
 })();
