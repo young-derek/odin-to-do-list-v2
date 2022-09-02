@@ -92,25 +92,17 @@ const dom = (() => {
     }
 
     // SHOW ELEMENTS
-    const showElements = () => {
-        arguments.forEach((argument) => {
+    function showElements() {
+        Array.from(arguments).forEach((argument) => {
             argument.classList.remove('hide');
         });
     };
 
     // HIDE ELEMENTS
     const hideElements = () => {
-        arguments.forEach((argument) => {
+        Array.from(arguments).forEach((argument) => {
             argument.classList.add('hide');
         });
-    };
-
-    // SHOW NEW PROJECT MODAL
-    const displayProjectModal = () => {
-        const modal = document.querySelector('#modal');
-        const modalHeader = document.querySelector('#modal-header-title');
-        const modalTitleDiv = document.querySelector('#modal-title-div');
-        const modalButtons = document.querySelector('#modal-buttons');
     };
 
     // Return functions
@@ -118,7 +110,6 @@ const dom = (() => {
         updateUi,
         showElements,
         hideElements,
-        displayProjectModal,
     };
 })();
 
