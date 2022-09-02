@@ -11,7 +11,7 @@ const handlers = (() => {
     // ADD PROJECT BUTTON EVENT LISTENER
     const addProjectButton = document.querySelector('#add-project-button');
     addProjectButton.addEventListener('click', () => {
-        displayProjectModal();
+        showElements(modal, modalHeader, modalTitleDiv, modalButtons);
     });
 })();
 

@@ -1,4 +1,4 @@
-import dom from './dom.js';
+import dom from './dom';
 import handlers from './handlers.js';
 import './style.css';
 
@@ -15,14 +15,6 @@ const toDoList = [
         ],
     },
 ];
-
-// SHOW NEW PROJECT MODAL
-const displayProjectModal = () => {
-    const modal = document.querySelector('#modal');
-    const modalHeader = document.querySelector('#modal-header-title');
-    const modalTitleDiv = document.querySelector('#modal-title-div');
-    const modalButtons = document.querySelector('#modal-buttons');
-};
 
 // Run update UI
 dom.updateUi(toDoList);

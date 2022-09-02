@@ -89,6 +89,36 @@ const dom = (() => {
                 taskList.append(taskItem);
             });
         });
+    }
+
+    // SHOW ELEMENTS
+    const showElements = () => {
+        arguments.forEach((argument) => {
+            argument.classList.remove('hide');
+        });
+    };
+
+    // HIDE ELEMENTS
+    const hideElements = () => {
+        arguments.forEach((argument) => {
+            argument.classList.add('hide');
+        });
+    };
+
+    // SHOW NEW PROJECT MODAL
+    const displayProjectModal = () => {
+        const modal = document.querySelector('#modal');
+        const modalHeader = document.querySelector('#modal-header-title');
+        const modalTitleDiv = document.querySelector('#modal-title-div');
+        const modalButtons = document.querySelector('#modal-buttons');
+    };
+
+    // Return functions
+    return {
+        updateUi,
+        showElements,
+        hideElements,
+        displayProjectModal,
     };
 })();
 

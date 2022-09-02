@@ -2,6 +2,197 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/dom.js":
+/*!********************!*\
+  !*** ./src/dom.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks.js */ "./src/tasks.js");
+/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
+var _arguments = typeof arguments === "undefined" ? void 0 : arguments;
+
+
+
+
+var dom = function () {
+  // UPDATE UI
+  var updateUi = function updateUi(toDoList) {
+    // Variable to track project index
+    var projectIndex = 0; // Clear the current UI of projects and tasks
+
+    var projectList = document.querySelector('#project-list');
+    var taskList = document.querySelector('#task-list');
+    projectList.innerHTML = '';
+    taskList.innerHTML = ''; // Create projects and tasks in the dom based on the to do list
+
+    toDoList.forEach(function (project) {
+      // Create a new project item's elements
+      var projectItem = document.createElement('li');
+      var projectTitle = document.createElement('p');
+      var projectEditButton = document.createElement('button');
+      var projectRemoveButton = document.createElement('button');
+      projectTitle.textContent = project.title;
+      projectEditButton.textContent = 'Edit';
+      projectRemoveButton.textContent = 'Remove';
+      projectItem.classList.add('project-item');
+      projectTitle.classList.add('project-title');
+      projectEditButton.classList.add('project-edit-button');
+      projectRemoveButton.classList.add('project-remove-button');
+      projectItem.dataset.index = projectIndex; // Increment the project index
+
+      projectIndex++; // Append the project to the DOM
+
+      projectItem.append(projectTitle, projectEditButton, projectRemoveButton);
+      projectList.append(projectItem); // Variable to track task index
+
+      var taskIndex = 0; // Create task items in the DOM
+
+      project.tasks.forEach(function (task) {
+        var taskItem = document.createElement('li');
+        var taskCheckbox = document.createElement('input');
+        var taskTitle = document.createElement('p');
+        var taskDueDate = document.createElement('p');
+        var taskDetailsButton = document.createElement('button');
+        var taskEditButton = document.createElement('button');
+        var taskRemoveButton = document.createElement('button');
+        taskItem.classList.add('task-item');
+        taskCheckbox.classList.add('task-checkbox');
+        taskTitle.classList.add('task-title');
+        taskDueDate.classList.add('task-due-date');
+        taskDetailsButton.classList.add('task-details-button');
+        taskEditButton.classList.add('task-edit-button');
+        taskRemoveButton.classList.add('task-remove-button');
+        taskTitle.textContent = task.title;
+        taskDueDate.textContent = task.dueDate;
+        taskDetailsButton.textContent = 'View Details';
+        taskEditButton.textContent = 'Edit';
+        taskRemoveButton.textContent = 'Remove';
+        taskCheckbox.setAttribute('type', 'checkbox');
+        taskItem.dataset.index = taskIndex; // Increment the task index
+
+        taskIndex++; // Append task to the DOM
+
+        taskItem.append(taskCheckbox, taskTitle, taskDueDate, taskDetailsButton, taskEditButton, taskRemoveButton);
+        taskList.append(taskItem);
+      });
+    });
+  }; // SHOW ELEMENTS
+
+
+  var showElements = function showElements() {
+    _arguments.forEach(function (argument) {
+      argument.classList.remove('hide');
+    });
+  }; // HIDE ELEMENTS
+
+
+  var hideElements = function hideElements() {
+    _arguments.forEach(function (argument) {
+      argument.classList.add('hide');
+    });
+  }; // SHOW NEW PROJECT MODAL
+
+
+  var displayProjectModal = function displayProjectModal() {
+    var modal = document.querySelector('#modal');
+    var modalHeader = document.querySelector('#modal-header-title');
+    var modalTitleDiv = document.querySelector('#modal-title-div');
+    var modalButtons = document.querySelector('#modal-buttons');
+  };
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dom);
+
+/***/ }),
+
+/***/ "./src/handlers.js":
+/*!*************************!*\
+  !*** ./src/handlers.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
+/* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks.js */ "./src/tasks.js");
+/* harmony import */ var _projects_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projects.js */ "./src/projects.js");
+
+
+
+
+var handlers = function () {
+  var modal = document.querySelector('#modal');
+  var modalHeader = document.querySelector('#modal-header-title');
+  var modalTitleDiv = document.querySelector('#modal-title-div');
+  var modalButtons = document.querySelector('#modal-buttons'); // ADD PROJECT BUTTON EVENT LISTENER
+
+  var addProjectButton = document.querySelector('#add-project-button');
+  addProjectButton.addEventListener('click', function () {
+    showElements(modal, modalHeader, modalTitleDiv, modalButtons);
+  });
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handlers);
+
+/***/ }),
+
+/***/ "./src/projects.js":
+/*!*************************!*\
+  !*** ./src/projects.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var projects = function () {
+  // PROJECT FACTORY FUNCTION
+  var Project = function Project(title) {
+    return {
+      title: title,
+      tasks: []
+    };
+  };
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projects);
+
+/***/ }),
+
+/***/ "./src/tasks.js":
+/*!**********************!*\
+  !*** ./src/tasks.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var tasks = function () {
+  // TASK FACTORY FUNCTION
+  var Task = function Task(title, description, dueDate, priority) {
+    return {
+      title: title,
+      description: description,
+      dueDate: dueDate,
+      priority: priority
+    };
+  };
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tasks);
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
 /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
@@ -21,7 +212,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*----- GLOBALS -----*/\n* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n    border-radius: 5px;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --medium-light-neutral-color: #aaa;\n    --light-neutral-color: #ddd;\n}\n\n/*----- MAIN -----*/\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\n/*----- HEADER -----*/\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n    display: flex;\n    align-items: center;\n}\n\n/*----- PROJECTS -----*/\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n    min-height: calc(50vh - 4rem);\n}\n\n#projects-section-container * {\n    padding: 3px;\n    margin: 3px;\n}\n\n.project-item {\n    background-color: var(--medium-light-neutral-color);\n}\n\n/*----- TASKS -----*/\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n    min-height: calc(50vh - 4rem);\n\n}\n\n/*----- FOOTER -----*/\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n/*----- MODAL -----*/\n#modal {\n    visibility: hidden;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n#modal-card {\n    position: relative;\n    width: clamp(35ch, 70%, 50ch);\n    height: 300px;\n    border-radius: 5px;\n    margin: auto;\n    top: 25%;\n    border: 2px solid red;\n}\n\n/*----- CONDITIONAL -----*/\n\n/*----- NARROW WIDTH -----*/\n\n@media only screen and (max-width: 768px) {\n    #main-container {\n        display: grid;\n        grid-template-columns: auto;\n        grid-template-rows: 5rem auto auto 3rem;\n\n    }\n\n    header,\n    #project-section-container,\n    #tasks-section-container,\n    footer {\n        grid-row: auto;\n        grid-column: auto;\n    }\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA,sBAAsB;AACtB;IACI,UAAU;IACV,SAAS;IACT,sBAAsB;IACtB,gBAAgB;IAChB,yCAAyC;IACzC,kBAAkB;AACtB;;AAEA;IACI,wBAAwB;IACxB,yBAAyB;IACzB,yBAAyB;IACzB,0BAA0B;IAC1B,4BAA4B;IAC5B,kCAAkC;IAClC,2BAA2B;AAC/B;;AAEA,mBAAmB;AACnB;IACI,aAAa;IACb,8BAA8B;IAC9B,iCAAiC;IACjC,iBAAiB;AACrB;;AAEA,qBAAqB;AACrB;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;IACnC,aAAa;IACb,mBAAmB;AACvB;;AAEA,uBAAuB;AACvB;IACI,eAAe;IACf,kBAAkB;IAClB,4CAA4C;IAC5C,6BAA6B;AACjC;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,mDAAmD;AACvD;;AAEA,oBAAoB;AACpB;IACI,eAAe;IACf,kBAAkB;IAClB,6BAA6B;;AAEjC;;AAEA,qBAAqB;AACrB;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;AACvC;;AAEA,oBAAoB;AACpB;IACI,kBAAkB;IAClB,eAAe;IACf,MAAM;IACN,OAAO;IACP,WAAW;IACX,YAAY;IACZ,0CAA0C;AAC9C;;AAEA;IACI,kBAAkB;IAClB,6BAA6B;IAC7B,aAAa;IACb,kBAAkB;IAClB,YAAY;IACZ,QAAQ;IACR,qBAAqB;AACzB;;AAEA,0BAA0B;;AAE1B,2BAA2B;;AAE3B;IACI;QACI,aAAa;QACb,2BAA2B;QAC3B,uCAAuC;;IAE3C;;IAEA;;;;QAII,cAAc;QACd,iBAAiB;IACrB;AACJ","sourcesContent":["/*----- GLOBALS -----*/\n* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n    border-radius: 5px;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --medium-light-neutral-color: #aaa;\n    --light-neutral-color: #ddd;\n}\n\n/*----- MAIN -----*/\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\n/*----- HEADER -----*/\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n    display: flex;\n    align-items: center;\n}\n\n/*----- PROJECTS -----*/\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n    min-height: calc(50vh - 4rem);\n}\n\n#projects-section-container * {\n    padding: 3px;\n    margin: 3px;\n}\n\n.project-item {\n    background-color: var(--medium-light-neutral-color);\n}\n\n/*----- TASKS -----*/\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n    min-height: calc(50vh - 4rem);\n\n}\n\n/*----- FOOTER -----*/\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n/*----- MODAL -----*/\n#modal {\n    visibility: hidden;\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n#modal-card {\n    position: relative;\n    width: clamp(35ch, 70%, 50ch);\n    height: 300px;\n    border-radius: 5px;\n    margin: auto;\n    top: 25%;\n    border: 2px solid red;\n}\n\n/*----- CONDITIONAL -----*/\n\n/*----- NARROW WIDTH -----*/\n\n@media only screen and (max-width: 768px) {\n    #main-container {\n        display: grid;\n        grid-template-columns: auto;\n        grid-template-rows: 5rem auto auto 3rem;\n\n    }\n\n    header,\n    #project-section-container,\n    #tasks-section-container,\n    footer {\n        grid-row: auto;\n        grid-column: auto;\n    }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/*----- GLOBALS -----*/\n* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n    border-radius: 5px;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --medium-light-neutral-color: #aaa;\n    --light-neutral-color: #ddd;\n}\n\n/*----- MAIN -----*/\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\n/*----- HEADER -----*/\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n    display: flex;\n    align-items: center;\n}\n\n/*----- PROJECTS -----*/\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n    min-height: calc(50vh - 4rem);\n}\n\n#projects-section-container *,\n#tasks-section-container * {\n    padding: 5px;\n    margin: 2px;\n}\n\n.project-item {\n    background-color: var(--medium-light-neutral-color);\n}\n\n/*----- TASKS -----*/\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n    min-height: calc(50vh - 4rem);\n}\n\n.task-item {\n    padding: 5px;\n    background-color: var(--medium-light-neutral-color);\n    display: grid;\n    grid-template-columns: auto 1fr auto auto auto auto auto;\n}\n/*----- FOOTER -----*/\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n/*----- MODAL -----*/\n#modal {\n    /* visibility: hidden; */\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n#modal-card {\n    position: relative;\n    width: clamp(35ch, 70%, 50ch);\n    height: 300px;\n    border-radius: 5px;\n    margin: auto;\n    top: 25%;\n    border: 2px solid red;\n    background-color: var(--light-neutral-color);\n}\n\n#modal-header {\n    display: flex;\n    justify-content: space-between;\n}\n\n/*----- DYNAMIC STYLES -----*/\n.hide {\n    display: none;\n}\n\n/*----- NARROW WIDTH -----*/\n\n@media only screen and (max-width: 768px) {\n    #main-container {\n        display: grid;\n        grid-template-columns: auto;\n        grid-template-rows: 5rem auto auto 3rem;\n    }\n\n    header,\n    #project-section-container,\n    #tasks-section-container,\n    footer {\n        grid-row: auto;\n        grid-column: auto;\n    }\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA,sBAAsB;AACtB;IACI,UAAU;IACV,SAAS;IACT,sBAAsB;IACtB,gBAAgB;IAChB,yCAAyC;IACzC,kBAAkB;AACtB;;AAEA;IACI,wBAAwB;IACxB,yBAAyB;IACzB,yBAAyB;IACzB,0BAA0B;IAC1B,4BAA4B;IAC5B,kCAAkC;IAClC,2BAA2B;AAC/B;;AAEA,mBAAmB;AACnB;IACI,aAAa;IACb,8BAA8B;IAC9B,iCAAiC;IACjC,iBAAiB;AACrB;;AAEA,qBAAqB;AACrB;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;IACnC,aAAa;IACb,mBAAmB;AACvB;;AAEA,uBAAuB;AACvB;IACI,eAAe;IACf,kBAAkB;IAClB,4CAA4C;IAC5C,6BAA6B;AACjC;;AAEA;;IAEI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,mDAAmD;AACvD;;AAEA,oBAAoB;AACpB;IACI,eAAe;IACf,kBAAkB;IAClB,6BAA6B;AACjC;;AAEA;IACI,YAAY;IACZ,mDAAmD;IACnD,aAAa;IACb,wDAAwD;AAC5D;AACA,qBAAqB;AACrB;IACI,eAAe;IACf,kBAAkB;IAClB,mCAAmC;AACvC;;AAEA,oBAAoB;AACpB;IACI,wBAAwB;IACxB,eAAe;IACf,MAAM;IACN,OAAO;IACP,WAAW;IACX,YAAY;IACZ,0CAA0C;AAC9C;;AAEA;IACI,kBAAkB;IAClB,6BAA6B;IAC7B,aAAa;IACb,kBAAkB;IAClB,YAAY;IACZ,QAAQ;IACR,qBAAqB;IACrB,4CAA4C;AAChD;;AAEA;IACI,aAAa;IACb,8BAA8B;AAClC;;AAEA,6BAA6B;AAC7B;IACI,aAAa;AACjB;;AAEA,2BAA2B;;AAE3B;IACI;QACI,aAAa;QACb,2BAA2B;QAC3B,uCAAuC;IAC3C;;IAEA;;;;QAII,cAAc;QACd,iBAAiB;IACrB;AACJ","sourcesContent":["/*----- GLOBALS -----*/\n* {\n    padding: 0;\n    margin: 0;\n    box-sizing: border-box;\n    list-style: none;\n    font-family: Arial, Helvetica, sans-serif;\n    border-radius: 5px;\n}\n\n:root {\n    --main-color: lightgreen;\n    --secondary-color: yellow;\n    --third-color: lightcoral;\n    --dark-neutral-color: #222;\n    --medium-neutral-color: #999;\n    --medium-light-neutral-color: #aaa;\n    --light-neutral-color: #ddd;\n}\n\n/*----- MAIN -----*/\n#main-container {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    grid-template-rows: 5rem 1fr 3rem;\n    min-height: 100vh;\n}\n\n/*----- HEADER -----*/\nheader {\n    grid-row: 1 / 2;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n    display: flex;\n    align-items: center;\n}\n\n/*----- PROJECTS -----*/\n#projects-section-container {\n    grid-row: 2 / 3;\n    grid-column: 1 / 2;\n    background-color: var(--light-neutral-color);\n    min-height: calc(50vh - 4rem);\n}\n\n#projects-section-container *,\n#tasks-section-container * {\n    padding: 5px;\n    margin: 2px;\n}\n\n.project-item {\n    background-color: var(--medium-light-neutral-color);\n}\n\n/*----- TASKS -----*/\n#tasks-section-container {\n    grid-row: 2 / 3;\n    grid-column: 2 / 3;\n    min-height: calc(50vh - 4rem);\n}\n\n.task-item {\n    padding: 5px;\n    background-color: var(--medium-light-neutral-color);\n    display: grid;\n    grid-template-columns: auto 1fr auto auto auto auto auto;\n}\n/*----- FOOTER -----*/\nfooter {\n    grid-row: 3 / 4;\n    grid-column: 1 / 3;\n    background-color: var(--main-color);\n}\n\n/*----- MODAL -----*/\n#modal {\n    /* visibility: hidden; */\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n#modal-card {\n    position: relative;\n    width: clamp(35ch, 70%, 50ch);\n    height: 300px;\n    border-radius: 5px;\n    margin: auto;\n    top: 25%;\n    border: 2px solid red;\n    background-color: var(--light-neutral-color);\n}\n\n#modal-header {\n    display: flex;\n    justify-content: space-between;\n}\n\n/*----- DYNAMIC STYLES -----*/\n.hide {\n    display: none;\n}\n\n/*----- NARROW WIDTH -----*/\n\n@media only screen and (max-width: 768px) {\n    #main-container {\n        display: grid;\n        grid-template-columns: auto;\n        grid-template-rows: 5rem auto auto 3rem;\n    }\n\n    header,\n    #project-section-container,\n    #tasks-section-container,\n    footer {\n        grid-row: auto;\n        grid-column: auto;\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -610,8 +801,23 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
+/* harmony import */ var _handlers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./handlers.js */ "./src/handlers.js");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 
+
+
+var toDoList = [{
+  title: 'Big project',
+  tasks: [{
+    title: 'Take out the trash',
+    description: 'I have to take out the trash on Sunday',
+    dueDate: '2022-09-04',
+    priority: 'High'
+  }]
+}]; // Run update UI
+
+_dom_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateUi(toDoList);
 })();
 
 /******/ })()
