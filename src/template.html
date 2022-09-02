@@ -22,35 +22,14 @@
                 <h2 id="tasks-due-this-week">This Week</h2>
                 <h2 id="projects-section-header">Projects:</h2>
                 <button id="add-project-button">+ Add New Project</button>
-                <ul id="projects-list">
-                    <li class="project-item">
-                        <div class="project-title">Project 1</div>
-                        <button class="project-edit-button">Edit</button>
-                        <button class="project-remove-button">Remove</button>
-                    </li>
-                </ul>
+                <ul id="project-list"></ul>
             </section>
 
             <!-- TASKS -->
             <section id="tasks-section-container">
                 <h2 id="tasks-section-header">Tasks:</h2>
                 <button id="add-task-button">+ Add New Task</button>
-                <ul id="tasks-list">
-                    <li class="task-item">
-                        <input
-                            type="checkbox"
-                            class="task-completed-checkbox"
-                        />
-                        <div class="task-item-title">Take out the trash</div>
-                        <div class="task-item-due-date">2022-10-18</div>
-                        <div class="task-item-priority">High Priority</div>
-                        <button class="task-item-more-info-button">
-                            View Details
-                        </button>
-                        <button class="task-item-edit-button">Edit</button>
-                        <button class="task-item-remove-button">Remove</button>
-                    </li>
-                </ul>
+                <ul id="task-list"></ul>
             </section>
 
             <!-- FOOTER -->
@@ -62,7 +41,7 @@
         </div>
 
         <!-- MODAL -->
-        <div id="modal">
+        <form id="modal hide">
             <div id="modal-card">
                 <div id="modal-header">
                     <h2 class="modal-header-title">Add Task/Project</h2>
@@ -71,9 +50,8 @@
 
                 <!-- MODAL CONTENT -->
                 <div class="modal-content">
-
                     <!-- TITLE INPUT -->
-                    <div class="modal-title-div">
+                    <div class="modal-title-div hide">
                         <label for="modal-title-input">Title</label>
                         <input
                             type="text"
@@ -85,7 +63,6 @@
 
                     <!-- TASK INPUT -->
                     <div class="modal-task-input hide">
-
                         <!-- TASK DESCRIPTION -->
                         <div class="modal-task-description-div">
                             <label for="modal-task-description-input"
@@ -124,8 +101,7 @@
                     </div>
 
                     <!-- VIEW TASK INFO -->
-                    <div class="modal-view-info">
-                        
+                    <div class="modal-view-info hide">
                         <!-- VIEW TITLE -->
                         <div class="modal-view-task-title-div">
                             <p class="modal-view-task-title">Title</p>
@@ -163,11 +139,11 @@
 
                     <!-- MODAL BUTTONS -->
                     <div class="modal-buttons">
-                        <button class="modal-submit-button">Submit</button>
+                        <button class="modal-submit-button hide">Submit</button>
                         <button class="modal-cancel-button">Cancel</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </body>
 </html>
