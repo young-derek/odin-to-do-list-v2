@@ -3,15 +3,29 @@ import projects from './projects.js';
 
 const dom = (() => {
     // UPDATE UI
-    const updateUi = (toDoList) => {
+    const updateUi = (
+        toDoList,
+        selectedProject,
+        clickedToday,
+        clickedThisWeek
+    ) => {
+        updateProjectListDisplay(toDoList);
+        updateTaskListDisplay(
+            toDoList,
+            selectedProject,
+            clickedToday,
+            clickedThisWeek
+        );
+    };
+
+    // UPDATE PROJECT LIST DISPLAY
+    const updateProjectListDisplay = (toDoList) => {
         // Variable to track project index
         let projectIndex = 0;
 
         // Clear the current UI of projects and tasks
         const projectList = document.querySelector('#project-list');
-        const taskList = document.querySelector('#task-list');
         projectList.innerHTML = '';
-        taskList.innerHTML = '';
 
         // Create projects and tasks in the dom based on the to do list
         toDoList.forEach((project) => {
@@ -42,61 +56,97 @@ const dom = (() => {
                 projectRemoveButton
             );
             projectList.append(projectItem);
-
-            // Variable to track task index
-            let taskIndex = 0;
-
-            // Create task items in the DOM
-            project.tasks.forEach((task) => {
-                const taskItem = document.createElement('li');
-                const taskCheckbox = document.createElement('input');
-                const taskTitle = document.createElement('p');
-                const taskDueDate = document.createElement('p');
-                const taskDetailsButton = document.createElement('button');
-                const taskEditButton = document.createElement('button');
-                const taskRemoveButton = document.createElement('button');
-
-                taskItem.classList.add('task-item');
-                taskCheckbox.classList.add('task-checkbox');
-                taskTitle.classList.add('task-title');
-                taskDueDate.classList.add('task-due-date');
-                taskDetailsButton.classList.add('task-details-button');
-                taskEditButton.classList.add('task-edit-button');
-                taskRemoveButton.classList.add('task-remove-button');
-
-                taskTitle.textContent = task.title;
-                taskDueDate.textContent = task.dueDate;
-                taskDetailsButton.textContent = 'View Details';
-                taskEditButton.textContent = 'Edit';
-                taskRemoveButton.textContent = 'Remove';
-
-                taskCheckbox.setAttribute('type', 'checkbox');
-
-                taskItem.dataset.index = taskIndex;
-
-                // Increment the task index
-                taskIndex++;
-
-                // Append task to the DOM
-                taskItem.append(
-                    taskCheckbox,
-                    taskTitle,
-                    taskDueDate,
-                    taskDetailsButton,
-                    taskEditButton,
-                    taskRemoveButton
-                );
-                taskList.append(taskItem);
-            });
         });
-    }
+    };
+
+    // UPDATE TASK LIST DISPLAY
+    const updateTaskListDisplay = (
+        toDoList,
+        selectedProject,
+        clickedToday,
+        clickedThisWeek
+    ) => {
+        const taskList = document.querySelector('#task-list');
+        taskList.innerHTML = '';
+
+        // Variable to track task index
+        let taskIndex = 0;
+        let taskArray = [];
+        const today = new Date().toISOString().slice(0, 10);
+        let nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        nextWeek = nextWeek.toISOString().slice(0, 10);
+
+        // Determine task array to iterate over and append to DOM
+        if (clickedToday) {
+            toDoList.forEach((project) => {
+                taskArray.push(
+                    ...project.tasks.filter((task) => task.dueDate === today)
+                );
+            });
+        } else if (clickedThisWeek) {
+            toDoList.forEach((project) => {
+                taskArray.push(
+                    ...project.tasks.filter(
+                        (task) =>
+                            task.dueDate >= today && task.dueDate <= nextWeek
+                    )
+                );
+            });
+        } else {
+            taskArray = toDoList[selectedProject].tasks;
+        }
+
+        // Create task items in the DOM
+        taskArray.forEach((task) => {
+            const taskItem = document.createElement('li');
+            const taskCheckbox = document.createElement('input');
+            const taskTitle = document.createElement('p');
+            const taskDueDate = document.createElement('p');
+            const taskDetailsButton = document.createElement('button');
+            const taskEditButton = document.createElement('button');
+            const taskRemoveButton = document.createElement('button');
+
+            taskItem.classList.add('task-item');
+            taskCheckbox.classList.add('task-checkbox');
+            taskTitle.classList.add('task-title');
+            taskDueDate.classList.add('task-due-date');
+            taskDetailsButton.classList.add('task-details-button');
+            taskEditButton.classList.add('task-edit-button');
+            taskRemoveButton.classList.add('task-remove-button');
+
+            taskTitle.textContent = task.title;
+            taskDueDate.textContent = task.dueDate;
+            taskDetailsButton.textContent = 'View Details';
+            taskEditButton.textContent = 'Edit';
+            taskRemoveButton.textContent = 'Remove';
+
+            taskCheckbox.setAttribute('type', 'checkbox');
+
+            taskItem.dataset.index = taskIndex;
+
+            // Increment the task index
+            taskIndex++;
+
+            // Append task to the DOM
+            taskItem.append(
+                taskCheckbox,
+                taskTitle,
+                taskDueDate,
+                taskDetailsButton,
+                taskEditButton,
+                taskRemoveButton
+            );
+            taskList.append(taskItem);
+        });
+    };
 
     // SHOW ELEMENTS
     function showElements() {
         Array.from(arguments).forEach((argument) => {
             argument.classList.remove('hide');
         });
-    };
+    }
 
     // HIDE ELEMENTS
     const hideElements = () => {
@@ -110,6 +160,8 @@ const dom = (() => {
         updateUi,
         showElements,
         hideElements,
+        updateTaskListDisplay,
+        updateProjectListDisplay,
     };
 })();
 

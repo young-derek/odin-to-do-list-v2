@@ -12,9 +12,26 @@ const toDoList = [
                 dueDate: '2022-09-04',
                 priority: 'High',
             },
+            {
+                title: 'Donate clothes',
+                description: 'Donate unused clothes to Value Village.',
+                dueDate: '2022-09-20',
+                priority: 'Low',
+            }
         ],
     },
+    {
+        title: 'Mini project',
+        tasks: [
+            {
+                title: 'Go for a jog',
+                description: 'Jog 4km in 20 minutes.',
+                dueDate: '2022-09-15',
+                priority: 'Medium',
+            }
+        ]
+    }
 ];
 
 // Run update UI
-dom.updateUi(toDoList);
+dom.updateUi(toDoList, 0, 0, 0);

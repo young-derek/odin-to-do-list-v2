@@ -105,6 +105,10 @@ footer {
     display: none;
 }
 
+.selected-project {
+    background-color: yellow;
+}
+
 /*----- NARROW WIDTH -----*/
 
 @media only screen and (max-width: 768px) {
