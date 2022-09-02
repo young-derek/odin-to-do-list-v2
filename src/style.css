@@ -49,6 +49,16 @@ header {
     margin: 2px;
 }
 
+
+.project-item,
+.project-title,
+.project-edit-button,
+.project-remove-button,
+#tasks-due-today,
+#tasks-due-this-week {
+    cursor: pointer;
+}
+
 .project-item {
     background-color: var(--medium-light-neutral-color);
 }

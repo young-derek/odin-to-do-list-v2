@@ -72,7 +72,6 @@ const dom = (() => {
         const taskList = document.querySelector('#task-list');
         taskList.innerHTML = '';
 
-        // Variable to track task index
         let taskIndex = 0;
         let taskArray = [];
         const today = new Date().toISOString().slice(0, 10);
@@ -163,8 +162,30 @@ const dom = (() => {
         });
     };
 
-    // REMOVE A PROJECT
-    const removeProject = (projectIndex) => {};
+    // SHOW TASK DETAILS IN TASK EDIT MODAL
+    function showEditTaskDetails(toDoList,
+        selectedProject,
+        taskIndex,
+        modalTitleInput,
+        modalTaskDescriptionInput,
+        modalTaskDueDateInput,
+        modalTaskPrioritySelect) {
+            modalTitleInput.value = toDoList[selectedProject].tasks[taskIndex].title;
+            modalTaskDescriptionInput.value = toDoList[selectedProject].tasks[taskIndex].description;
+            modalTaskDueDateInput.value = toDoList[selectedProject].tasks[taskIndex].dueDate;
+            modalTaskPrioritySelect.value = toDoList[selectedProject].tasks[taskIndex].priority;
+    }
+
+    // SHOW PROJECT DETAILS IN PROJECT EDIT MODAL
+    function showEditProjectDetails(
+        toDoList,
+        modalTitleInput,
+        projectIndex
+    ) {
+        modalTitleInput.value = toDoList[projectIndex].title;
+    }
+
+
 
     // Return functions
     return {
@@ -173,6 +194,8 @@ const dom = (() => {
         hideElements,
         updateTaskListDisplay,
         updateProjectListDisplay,
+        showEditTaskDetails,
+        showEditProjectDetails,
     };
 })();
 

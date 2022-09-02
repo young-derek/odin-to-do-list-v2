@@ -40,14 +40,26 @@ const handlers = (() => {
     const modalButtons = document.querySelector('#modal-buttons');
     const modalSubmitButton = document.querySelector('#modal-submit-button');
     const modalTaskInput = document.querySelector('#modal-task-input');
+    const modalTitleInput = document.querySelector('#modal-title-input');
+    const modalTaskDescriptionInput = document.querySelector(
+        '#modal-task-description-input'
+    );
+    const modalTaskDueDateInput = document.querySelector(
+        '#modal-task-due-date-input'
+    );
+    const modalTaskPrioritySelect = document.querySelector(
+        '#modal-task-priority-select'
+    );
     const addProjectButton = document.querySelector('#add-project-button');
     const addTaskButton = document.querySelector('#add-task-button');
     const projectList = document.querySelector('#project-list');
     const tasksDueToday = document.querySelector('#tasks-due-today');
     const tasksDueThisWeek = document.querySelector('#tasks-due-this-week');
+    const taskList = document.querySelector('#task-list');
 
     let selectedProject = 0;
-    let editIndex = 0;
+    let taskIndex = 0;
+    let projectIndex = 0;
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
@@ -89,16 +101,15 @@ const handlers = (() => {
         dom.updateTaskListDisplay(toDoList, selectedProject, false, true);
     });
 
-    // DISPLAY PROJECT EDIT MODAL
-
     // DISPLAY TASK EDIT MODAL - todo
     // DISPLAY TASK DETAILS MODAL - todo
+    // REMOVE TASK
     // SUBMIT NEW PROJECT - todo
     // SUBMIT NEW TASK - todo
 
     // PROJECT LIST HANDLERS
     projectList.addEventListener('click', (event) => {
-        // SHOW A PROJECT'S TASKS
+        // SHOW A PROJECT'S TASKS, UPDATE SELECTED PROJECT
         if (event.target.classList.contains('project-title')) {
             selectedProject = event.target.parentElement.dataset.index;
             dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
@@ -107,24 +118,30 @@ const handlers = (() => {
             dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
         }
 
-        // SHOW EDIT PROJECT MODAL
+        // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
         if (event.target.classList.contains('project-edit-button')) {
-            editIndex = event.target.parentElement.dataset.index;
+            // Update project edit index
+            projectIndex = event.target.parentElement.dataset.index;
+
+            // Show the edit project modal
             dom.showElements(
                 modal,
                 modalTitleDiv,
-                modalTaskInput,
                 modalSubmitButton
             );
-            modalHeaderTitle.textContent = 'Edit Task';
+
+            // Pre-fill the project title input with the selected project's title
+            dom.showEditProjectDetails(toDoList, modalTitleInput, projectIndex);
+
+            // Update the modal header title
+            modalHeaderTitle.textContent = 'Edit Project';
         }
 
         // REMOVE A PROJECT
         if (event.target.classList.contains('project-remove-button')) {
-            
-            // Splice the project out of the array
+            // Remove the project from the toDoList array
             toDoList.splice(event.target.parentElement.dataset.index, 1);
-            
+
             // Update the selected project if necessary
             if (selectedProject > toDoList.length - 1) {
                 selectedProject--;
@@ -132,6 +149,48 @@ const handlers = (() => {
 
             // Update the UI
             dom.updateUi(toDoList, selectedProject, false, false);
+        }
+    });
+
+    // TASK LIST HANDLERS
+    taskList.addEventListener('click', (event) => {
+        // SHOW TASK DETAILS MODAL
+        if (event.target.classList.contains('task-details-button')) {
+            // Update the task 
+
+            // Display the task modal
+
+            // Populate the task modal with the selected task's data
+
+
+        }
+
+        // SHOW TASK EDIT MODAL, UPDATE TASK EDIT INDEX
+        if (event.target.classList.contains('task-edit-button')) {
+            // Update the task edit index
+            taskIndex = event.target.parentElement.dataset.index;
+
+            // Display the edit modal
+            dom.showElements(
+                modal,
+                modalTitleDiv,
+                modalTaskInput,
+                modalSubmitButton
+            );
+
+            // Update the edit modal header title
+            modalHeaderTitle.textContent = 'Edit Task';
+
+            // Pre-fill the modal inputs with the selected task's details
+            dom.showEditTaskDetails(
+                toDoList,
+                selectedProject,
+                taskIndex,
+                modalTitleInput,
+                modalTaskDescriptionInput,
+                modalTaskDueDateInput,
+                modalTaskPrioritySelect
+            );
         }
     });
 })();
