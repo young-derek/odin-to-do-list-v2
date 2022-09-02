@@ -47,9 +47,9 @@ const handlers = (() => {
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
-        // Update the add or edit mode
+        // Update add or edit mode
         addOrEditMode = 'add';
-        
+
         // Update the project index
         projectIndex = projects.toDoList.length;
 
@@ -65,8 +65,9 @@ const handlers = (() => {
 
     // DISPLAY NEW TASK MODAL
     addTaskButton.addEventListener('click', () => {
-        
-        
+        // Update add or edit mode
+        addOrEditMode = 'add';
+
         // Reset the modal form
         modal.reset();
 
@@ -133,6 +134,9 @@ const handlers = (() => {
 
         // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
         if (event.target.classList.contains('project-edit-button')) {
+            // Update add or edit mode
+            addOrEditMode = 'edit';
+
             // Update project edit index
             projectIndex = event.target.parentElement.dataset.index;
 
@@ -152,19 +156,22 @@ const handlers = (() => {
 
         // REMOVE A PROJECT
         if (event.target.classList.contains('project-remove-button')) {
-            // Update the task index
-            taskIndex = event.target.parentElement.dataset.index;
+            // Update the project index
+            projectIndex = event.target.parentElement.dataset.index;
 
             // Remove the project from the toDoList array
-            projects.toDoList.splice(taskIndex, 1);
+            projects.toDoList.splice(projectIndex, 1);
 
             // Update the selected project if necessary
-            if (selectedProject > toDoList.length - 1) {
+            if (
+                selectedProject > 0 &&
+                selectedProject > projects.toDoList.length - 1
+            ) {
                 selectedProject--;
             }
 
             // Update the UI
-            dom.updateUi(projects.toDoList, selectedProject, false, false);
+            dom.updateUi(projects.toDoList, taskDisplayMode, selectedProject);
         }
     });
 
