@@ -2,37 +2,6 @@ import dom from './dom.js';
 import tasks from './tasks.js';
 import projects from './projects.js';
 
-const toDoList = [
-    {
-        title: 'Big project',
-        tasks: [
-            {
-                title: 'Take out the trash',
-                description: 'I have to take out the trash on Sunday',
-                dueDate: '2022-09-02',
-                priority: 'High',
-            },
-            {
-                title: 'Donate clothes',
-                description: 'Donate unused clothes to Value Village.',
-                dueDate: '2022-09-07',
-                priority: 'Low',
-            },
-        ],
-    },
-    {
-        title: 'Mini project',
-        tasks: [
-            {
-                title: 'Go for a jog',
-                description: 'Jog 4km in 20 minutes.',
-                dueDate: '2022-09-15',
-                priority: 'Medium',
-            },
-        ],
-    },
-];
-
 const handlers = (() => {
     const modal = document.querySelector('#modal');
     const modalHeaderTitle = document.querySelector('#modal-header-title');
@@ -73,11 +42,16 @@ const handlers = (() => {
     let selectedProject = 0;
     let taskIndex = 0;
     let projectIndex = 0;
+    let taskDisplayMode = 'project';
+    let addOrEditMode = 'add';
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
+        // Update the add or edit mode
+        addOrEditMode = 'add';
+        
         // Update the project index
-        projectIndex = toDoList.length;
+        projectIndex = projects.toDoList.length;
 
         // Reset the modal form
         modal.reset();
@@ -91,6 +65,8 @@ const handlers = (() => {
 
     // DISPLAY NEW TASK MODAL
     addTaskButton.addEventListener('click', () => {
+        
+        
         // Reset the modal form
         modal.reset();
 
@@ -109,12 +85,24 @@ const handlers = (() => {
 
     // SHOW TASKS DUE TODAY
     tasksDueToday.addEventListener('click', () => {
-        dom.displayTodaysTasks(toDoList);
+        // Update task display mode
+        taskDisplayMode = 'today';
+        dom.createTaskElements(
+            projects.toDoList,
+            taskDisplayMode,
+            selectedProject
+        );
     });
 
     // SHOW TASKS DUE THIS WEEK
     tasksDueThisWeek.addEventListener('click', () => {
-        dom.displayWeeksTasks(toDoList);
+        // Update task display mode
+        taskDisplayMode = 'week';
+        dom.createTaskElements(
+            projects.toDoList,
+            taskDisplayMode,
+            selectedProject
+        );
     });
 
     // SUBMIT NEW PROJECT - todo
@@ -124,11 +112,23 @@ const handlers = (() => {
     projectList.addEventListener('click', (event) => {
         // SHOW A PROJECT'S TASKS, UPDATE SELECTED PROJECT
         if (event.target.classList.contains('project-title')) {
+            // Set display mode to project
+            taskDisplayMode = 'project';
             selectedProject = event.target.parentElement.dataset.index;
-            dom.displayProjectTasks(toDoList, selectedProject);
+            dom.createTaskElements(
+                projects.toDoList,
+                taskDisplayMode,
+                selectedProject
+            );
         } else if (event.target.classList.contains('project-item')) {
+            // Set display mode to project
+            taskDisplayMode = 'project';
             selectedProject = event.target.dataset.index;
-            dom.displayProjectTasks(toDoList, selectedProject);
+            dom.createTaskElements(
+                projects.toDoList,
+                taskDisplayMode,
+                selectedProject
+            );
         }
 
         // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
@@ -140,7 +140,11 @@ const handlers = (() => {
             dom.showElements(modal, modalTitleDiv, modalSubmitButton);
 
             // Pre-fill the project title input with the selected project's title
-            dom.showEditProjectDetails(toDoList, modalTitleInput, projectIndex);
+            dom.showEditProjectDetails(
+                projects.toDoList,
+                modalTitleInput,
+                projectIndex
+            );
 
             // Update the modal header title
             modalHeaderTitle.textContent = 'Edit Project';
@@ -150,9 +154,9 @@ const handlers = (() => {
         if (event.target.classList.contains('project-remove-button')) {
             // Update the task index
             taskIndex = event.target.parentElement.dataset.index;
-            
+
             // Remove the project from the toDoList array
-            toDoList.splice(taskIndex, 1);
+            projects.toDoList.splice(taskIndex, 1);
 
             // Update the selected project if necessary
             if (selectedProject > toDoList.length - 1) {
@@ -160,7 +164,7 @@ const handlers = (() => {
             }
 
             // Update the UI
-            dom.updateUi(toDoList, selectedProject, false, false);
+            dom.updateUi(projects.toDoList, selectedProject, false, false);
         }
     });
 
@@ -174,7 +178,7 @@ const handlers = (() => {
             dom.showElements(modal, modalViewInfo);
             // Populate the task modal with the selected task's data
             dom.showViewTaskDetails(
-                toDoList,
+                projects.toDoList,
                 selectedProject,
                 taskIndex,
                 modalViewTaskTitleInfo,
@@ -205,7 +209,7 @@ const handlers = (() => {
 
             // Pre-fill the modal inputs with the selected task's details
             dom.showEditTaskDetails(
-                toDoList,
+                projects.toDoList,
                 selectedProject,
                 taskIndex,
                 modalTitleInput,
@@ -221,16 +225,20 @@ const handlers = (() => {
             taskIndex = event.target.parentElement.dataset.index;
 
             // Remove the task from the selected project
-            toDoList[selectedProject].tasks.splice(taskIndex, 1);
+            projects.toDoList[selectedProject].tasks.splice(taskIndex, 1);
 
             // Update the task list
-            dom.updateTaskListDisplay(toDoList, selectedProject, false, false);
+            dom.createTaskElements(
+                projects.toDoList,
+                taskDisplayMode,
+                selectedProject
+            );
         }
     });
 
     // UPDATE UI ON PAGE LOAD
     (() => {
-        dom.updateUi(toDoList, selectedProject, false, false);
+        dom.updateUi(projects.toDoList, taskDisplayMode, selectedProject);
     })();
 })();
 
