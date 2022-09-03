@@ -52,9 +52,6 @@ const handlers = (() => {
         // Update add or edit mode
         addOrEditMode = 'add project';
 
-        // Update the project index
-        projectIndex = projects.toDoList.length;
-
         // Reset the modal form
         modal.reset();
 
@@ -141,13 +138,22 @@ const handlers = (() => {
                     selectedProject,
                     taskIndex
                 );
+            } else if (addOrEditMode === 'edit task') {
+                // Replace selected task with new values
+                tasks.editTask(
+                    modalTitleInput.value,
+                    modalTaskDescriptionInput.value,
+                    modalTaskDueDateInput.value,
+                    modalTaskPrioritySelect.value,
+                    projectIndex,
+                    taskIndex
+                );
             }
             
             // Hide modal elements
             dom.hideElements(
                 modal,
                 modalTitleDiv,
-                modalButtons,
                 modalSubmitButton,
                 modalTitleError,
                 modalTaskInput,
@@ -182,7 +188,7 @@ const handlers = (() => {
             dom.showElements(addTaskButton);
 
             // Update selected project
-            selectedProject = event.target.parentElement.dataset.index;
+            selectedProject = event.target.parentElement.dataset.projectIndex;
 
             // Update the task display
             dom.createTaskElements(
@@ -198,7 +204,7 @@ const handlers = (() => {
             dom.showElements(addTaskButton);
 
             // Update selected project
-            selectedProject = event.target.dataset.index;
+            selectedProject = event.target.dataset.projectIndex;
 
             // Update the task display
             dom.createTaskElements(
@@ -213,8 +219,11 @@ const handlers = (() => {
             // Update add or edit mode
             addOrEditMode = 'edit project';
 
-            // Update project edit index
-            projectIndex = event.target.parentElement.dataset.index;
+            // Update project index
+            projectIndex = event.target.parentElement.dataset.projectIndex;
+            
+            // Update task index
+            taskIndex = event.target.parentElement.dataset.taskIndex;
 
             // Show the edit project modal
             dom.showElements(modal, modalTitleDiv, modalButtons, modalSubmitButton);
@@ -233,7 +242,7 @@ const handlers = (() => {
         // REMOVE A PROJECT
         if (event.target.classList.contains('project-remove-button')) {
             // Update the project index
-            projectIndex = event.target.parentElement.dataset.index;
+            projectIndex = event.target.parentElement.dataset.projectIndex;
 
             // Remove the project from the toDoList array
             projects.toDoList.splice(projectIndex, 1);
@@ -269,7 +278,8 @@ const handlers = (() => {
                 modalViewTaskTitleInfo,
                 modalViewTaskDescriptionInfo,
                 modalViewTaskDueDateInfo,
-                modalViewTaskPriorityInfo
+                modalViewTaskPriorityInfo,
+                modalButtons
             );
 
             // Update the modal title
@@ -313,7 +323,7 @@ const handlers = (() => {
         // REMOVE TASK
         if (event.target.classList.contains('task-remove-button')) {
             // Update the task index
-            taskIndex = event.target.parentElement.dataset.index;
+            taskIndex = event.target.parentElement.dataset.taskIndex;
 
             // Remove the task from the selected project
             projects.toDoList[selectedProject].tasks.splice(taskIndex, 1);

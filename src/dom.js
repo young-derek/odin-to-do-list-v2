@@ -37,7 +37,7 @@ const dom = (() => {
             projectEditButton.classList.add('project-edit-button');
             projectRemoveButton.classList.add('project-remove-button');
 
-            projectItem.dataset.index = projectIndex;
+            projectItem.dataset.projectIndex = projectIndex;
 
             // Increment the project index
             projectIndex++;
@@ -54,9 +54,9 @@ const dom = (() => {
 
     // UPDATE TASK AND PROJECT INDEXES
     function updateIndexes(toDoList) {
-        let taskIndex = 0;
         let projectIndex = 0;
         toDoList.forEach((project) => {
+            let taskIndex = 0;
             project.tasks.forEach((task) => {
                 task.taskIndex = taskIndex;
                 task.projectIndex = projectIndex;
@@ -84,7 +84,7 @@ const dom = (() => {
         )
             .toISOString()
             .slice(0, 10);
-            
+
         let nextWeek = new Date();
         nextWeek.setDate(nextWeek.getDate() + 7);
         nextWeek = new Date(
