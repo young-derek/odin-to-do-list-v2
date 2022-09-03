@@ -69,7 +69,6 @@ const dom = (() => {
     // CREATE TASK DOM ELEMENTS
     function createTaskElements(toDoList, taskDisplayMode, selectedProject) {
         const taskList = document.querySelector('#task-list');
-        const addTaskButton = document.querySelector('#add-task-button');
         // Clear current task list
         taskList.innerHTML = '';
 
@@ -88,8 +87,6 @@ const dom = (() => {
 
         // Build the task array for the DOM based on display mode
         if (taskDisplayMode === 'today') {
-            console.log(projects.toDoList[0].tasks[0].dueDate);
-            console.log(nextWeek);
             // Hide the add task button
             hideElements(addTaskButton);
 
@@ -183,7 +180,7 @@ const dom = (() => {
     // SHOW TASK DETAILS IN TASK EDIT MODAL
     function showEditTaskDetails(
         toDoList,
-        selectedProject,
+        projectIndex,
         taskIndex,
         modalTitleInput,
         modalTaskDescriptionInput,
@@ -191,19 +188,19 @@ const dom = (() => {
         modalTaskPrioritySelect
     ) {
         modalTitleInput.value =
-            toDoList[selectedProject].tasks[taskIndex].title;
+            toDoList[projectIndex].tasks[taskIndex].title;
         modalTaskDescriptionInput.value =
-            toDoList[selectedProject].tasks[taskIndex].description;
+            toDoList[projectIndex].tasks[taskIndex].description;
         modalTaskDueDateInput.value =
-            toDoList[selectedProject].tasks[taskIndex].dueDate;
+            toDoList[projectIndex].tasks[taskIndex].dueDate;
         modalTaskPrioritySelect.value =
-            toDoList[selectedProject].tasks[taskIndex].priority;
+            toDoList[projectIndex].tasks[taskIndex].priority;
     }
 
     // SHOW TASK DETAILS IN TASK VIEW DETAIL MODAL
     function showViewTaskDetails(
         toDoList,
-        selectedProject,
+        projectIndex,
         taskIndex,
         modalViewTaskTitleInfo,
         modalViewTaskDescriptionInfo,
@@ -211,13 +208,13 @@ const dom = (() => {
         modalViewTaskPriorityInfo
     ) {
         modalViewTaskTitleInfo.textContent =
-            toDoList[selectedProject].tasks[taskIndex].title;
+            toDoList[projectIndex].tasks[taskIndex].title;
         modalViewTaskDescriptionInfo.textContent =
-            toDoList[selectedProject].tasks[taskIndex].description;
+            toDoList[projectIndex].tasks[taskIndex].description;
         modalViewTaskDueDateInfo.textContent =
-            toDoList[selectedProject].tasks[taskIndex].dueDate;
+            toDoList[projectIndex].tasks[taskIndex].dueDate;
         modalViewTaskPriorityInfo.textContent =
-            toDoList[selectedProject].tasks[taskIndex].priority;
+            toDoList[projectIndex].tasks[taskIndex].priority;
     }
 
     // SHOW PROJECT DETAILS IN PROJECT EDIT MODAL

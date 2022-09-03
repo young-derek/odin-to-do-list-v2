@@ -8,8 +8,10 @@ const handlers = (() => {
     const modalTitleDiv = document.querySelector('#modal-title-div');
     const modalButtons = document.querySelector('#modal-buttons');
     const modalSubmitButton = document.querySelector('#modal-submit-button');
+    const modalCancelButton = document.querySelector('#modal-cancel-button');
     const modalTaskInput = document.querySelector('#modal-task-input');
     const modalTitleInput = document.querySelector('#modal-title-input');
+    const modalTitleError = document.querySelector('#modal-title-error');
     const modalTaskDescriptionInput = document.querySelector(
         '#modal-task-description-input'
     );
@@ -88,6 +90,11 @@ const handlers = (() => {
     tasksDueToday.addEventListener('click', () => {
         // Update task display mode
         taskDisplayMode = 'today';
+
+        // Hide the add task button
+        dom.hideElements(addTaskButton);
+
+        // Update the task display
         dom.createTaskElements(
             projects.toDoList,
             taskDisplayMode,
@@ -99,6 +106,11 @@ const handlers = (() => {
     tasksDueThisWeek.addEventListener('click', () => {
         // Update task display mode
         taskDisplayMode = 'week';
+
+        // Hide the add task button
+        dom.hideElements(addTaskButton);
+
+        // Update the task display
         dom.createTaskElements(
             projects.toDoList,
             taskDisplayMode,
@@ -106,8 +118,42 @@ const handlers = (() => {
         );
     });
 
-    // SUBMIT NEW PROJECT - todo
-    // SUBMIT NEW TASK - todo
+    // ADD OR EDIT PROJECT
+    modalSubmitButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        // Validate title has been entered
+        if (modalTitleInput.value !== '') {
+            if (addOrEditMode === 'add') {
+                // Push new project to the to do list array
+                projects.toDoList.push(projects.Project(modalTitleInput.value));
+
+            } else if (addOrEditMode === 'edit') {
+                // Replace selected project's title with new value
+                projects.toDoList[projectIndex].title = modalTitleInput.value;
+            }
+            
+            // Hide modal elements
+            dom.hideElements(
+                modal,
+                modalTitleDiv,
+                modalButtons,
+                modalSubmitButton,
+                modalTitleError
+            );
+
+            // Update project list
+            dom.updateProjectListDisplay(projects.toDoList);
+
+        } else {
+            modalTitleError.classList.remove('hide');
+        }
+    });
+
+    // ADD OR EDIT TASK - todo
+
+    // MODAL CANCEL BUTTON
+    modalCancelButton.addEventListener('click', (event) => {});
 
     // PROJECT LIST HANDLERS
     projectList.addEventListener('click', (event) => {
@@ -115,7 +161,14 @@ const handlers = (() => {
         if (event.target.classList.contains('project-title')) {
             // Set display mode to project
             taskDisplayMode = 'project';
+
+            // Display the add task button
+            dom.showElements(addTaskButton);
+
+            // Update selected project
             selectedProject = event.target.parentElement.dataset.index;
+
+            // Update the task display
             dom.createTaskElements(
                 projects.toDoList,
                 taskDisplayMode,
@@ -124,7 +177,14 @@ const handlers = (() => {
         } else if (event.target.classList.contains('project-item')) {
             // Set display mode to project
             taskDisplayMode = 'project';
+
+            // Display the add task button
+            dom.showElements(addTaskButton);
+
+            // Update selected project
             selectedProject = event.target.dataset.index;
+
+            // Update the task display
             dom.createTaskElements(
                 projects.toDoList,
                 taskDisplayMode,
@@ -141,7 +201,7 @@ const handlers = (() => {
             projectIndex = event.target.parentElement.dataset.index;
 
             // Show the edit project modal
-            dom.showElements(modal, modalTitleDiv, modalSubmitButton);
+            dom.showElements(modal, modalTitleDiv, modalButtons, modalSubmitButton);
 
             // Pre-fill the project title input with the selected project's title
             dom.showEditProjectDetails(
@@ -181,12 +241,14 @@ const handlers = (() => {
         if (event.target.classList.contains('task-details-button')) {
             // Update the task index
             taskIndex = event.target.parentElement.dataset.taskIndex;
+            // Update the project index
+            projectIndex = event.target.parentElement.dataset.projectIndex;
             // Display the task modal
             dom.showElements(modal, modalViewInfo);
             // Populate the task modal with the selected task's data
             dom.showViewTaskDetails(
                 projects.toDoList,
-                selectedProject,
+                projectIndex,
                 taskIndex,
                 modalViewTaskTitleInfo,
                 modalViewTaskDescriptionInfo,
@@ -202,9 +264,12 @@ const handlers = (() => {
         if (event.target.classList.contains('task-edit-button')) {
             // Update add or edit mode
             addOrEditMode = 'edit';
-            
+
             // Update the task edit index
-            taskIndex = event.target.parentElement.dataset.index;
+            taskIndex = event.target.parentElement.dataset.taskIndex;
+
+            // Update the project index
+            projectIndex = event.target.parentElement.dataset.projectIndex;
 
             // Display the edit modal
             dom.showElements(
@@ -220,7 +285,7 @@ const handlers = (() => {
             // Pre-fill the modal inputs with the selected task's details
             dom.showEditTaskDetails(
                 projects.toDoList,
-                selectedProject,
+                projectIndex,
                 taskIndex,
                 modalTitleInput,
                 modalTaskDescriptionInput,
