@@ -77,19 +77,29 @@ const dom = (() => {
 
         // Define variables for today and 7 days from today
         let today = new Date();
-        today = new Date(`'${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'`).toISOString().slice(0,10);
+        today = new Date(
+            `'${today.getFullYear()}-${
+                today.getMonth() + 1
+            }-${today.getDate()}'`
+        )
+            .toISOString()
+            .slice(0, 10);
+            
         let nextWeek = new Date();
         nextWeek.setDate(nextWeek.getDate() + 7);
-        nextWeek = new Date(`'${nextWeek.getFullYear()}-${nextWeek.getMonth() + 1}-${nextWeek.getDate()}'`).toISOString().slice(0,10);
+        nextWeek = new Date(
+            `'${nextWeek.getFullYear()}-${
+                nextWeek.getMonth() + 1
+            }-${nextWeek.getDate()}'`
+        )
+            .toISOString()
+            .slice(0, 10);
 
         // Update task and project indexes on each task item
         updateIndexes(projects.toDoList);
 
         // Build the task array for the DOM based on display mode
         if (taskDisplayMode === 'today') {
-            // Hide the add task button
-            hideElements(addTaskButton);
-
             // Push tasks that are due today to the new array
             projects.toDoList.forEach((project) => {
                 project.tasks.forEach((task) => {
@@ -99,9 +109,6 @@ const dom = (() => {
                 });
             });
         } else if (taskDisplayMode === 'week') {
-            // Hide the add task button
-            hideElements(addTaskButton);
-
             // Push tasks that are due this week to the new array
             projects.toDoList.forEach((project) => {
                 project.tasks.forEach((task) => {
@@ -187,8 +194,7 @@ const dom = (() => {
         modalTaskDueDateInput,
         modalTaskPrioritySelect
     ) {
-        modalTitleInput.value =
-            toDoList[projectIndex].tasks[taskIndex].title;
+        modalTitleInput.value = toDoList[projectIndex].tasks[taskIndex].title;
         modalTaskDescriptionInput.value =
             toDoList[projectIndex].tasks[taskIndex].description;
         modalTaskDueDateInput.value =

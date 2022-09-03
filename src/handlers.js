@@ -45,12 +45,12 @@ const handlers = (() => {
     let taskIndex = 0;
     let projectIndex = 0;
     let taskDisplayMode = 'project';
-    let addOrEditMode = 'add';
+    let addOrEditMode = 'add project';
 
     // DISPLAY NEW PROJECT MODAL
     addProjectButton.addEventListener('click', () => {
         // Update add or edit mode
-        addOrEditMode = 'add';
+        addOrEditMode = 'add project';
 
         // Update the project index
         projectIndex = projects.toDoList.length;
@@ -68,7 +68,7 @@ const handlers = (() => {
     // DISPLAY NEW TASK MODAL
     addTaskButton.addEventListener('click', () => {
         // Update add or edit mode
-        addOrEditMode = 'add';
+        addOrEditMode = 'add task';
 
         // Reset the modal form
         modal.reset();
@@ -118,19 +118,29 @@ const handlers = (() => {
         );
     });
 
-    // ADD OR EDIT PROJECT
+    // MODAL SUBMIT BUTTON
     modalSubmitButton.addEventListener('click', (event) => {
         event.preventDefault();
 
         // Validate title has been entered
         if (modalTitleInput.value !== '') {
-            if (addOrEditMode === 'add') {
+            if (addOrEditMode === 'add project') {
                 // Push new project to the to do list array
                 projects.toDoList.push(projects.Project(modalTitleInput.value));
 
-            } else if (addOrEditMode === 'edit') {
+            } else if (addOrEditMode === 'edit project') {
                 // Replace selected project's title with new value
                 projects.toDoList[projectIndex].title = modalTitleInput.value;
+            } else if (addOrEditMode === 'add task') {
+                // Push new task to the selected project's tasks array
+                tasks.addTask(
+                    modalTitleInput.value,
+                    modalTaskDescriptionInput.value,
+                    modalTaskDueDateInput.value,
+                    modalTaskPrioritySelect.value,
+                    selectedProject,
+                    taskIndex
+                );
             }
             
             // Hide modal elements
@@ -139,18 +149,24 @@ const handlers = (() => {
                 modalTitleDiv,
                 modalButtons,
                 modalSubmitButton,
-                modalTitleError
+                modalTitleError,
+                modalTaskInput,
             );
 
-            // Update project list
-            dom.updateProjectListDisplay(projects.toDoList);
+            // Update UI
+            dom.updateUi(projects.toDoList, taskDisplayMode, selectedProject);
 
         } else {
             modalTitleError.classList.remove('hide');
         }
     });
 
-    // ADD OR EDIT TASK - todo
+    // ADD OR EDIT TASK
+    
+
+    // MARK TASK AS COMPLETED - todo
+    // MODAL CLOSE BUTTON - todo
+    // CLICK OFF MODAL TO CLOSE MODAL - todo
 
     // MODAL CANCEL BUTTON
     modalCancelButton.addEventListener('click', (event) => {});
@@ -195,7 +211,7 @@ const handlers = (() => {
         // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
         if (event.target.classList.contains('project-edit-button')) {
             // Update add or edit mode
-            addOrEditMode = 'edit';
+            addOrEditMode = 'edit project';
 
             // Update project edit index
             projectIndex = event.target.parentElement.dataset.index;
@@ -263,7 +279,7 @@ const handlers = (() => {
         // EDIT TASK
         if (event.target.classList.contains('task-edit-button')) {
             // Update add or edit mode
-            addOrEditMode = 'edit';
+            addOrEditMode = 'edit task';
 
             // Update the task edit index
             taskIndex = event.target.parentElement.dataset.taskIndex;

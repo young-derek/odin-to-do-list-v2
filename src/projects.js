@@ -37,19 +37,17 @@ const projects = (() => {
         },
     ];
 
-    // PROJECT PROTOTYPE
-    const projectActions = {
-        addProject() {},
-        editProject() {},
-        removeProject() {},
-    };
+        function addProject() {}
+        function editProject() {}
+        function removeProject() {}
+
 
     // PROJECT FACTORY FUNCTION
     const Project = (title) => {
-        let project = Object.create(projectActions);
-        project.title = title;
-        project.tasks = [];
-        return project;
+        return {
+            title,
+            tasks: [],
+        }
     };
     return {toDoList, Project};
 })();
