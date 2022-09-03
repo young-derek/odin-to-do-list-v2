@@ -77,16 +77,19 @@ const dom = (() => {
         let taskArray = [];
 
         // Define variables for today and 7 days from today
-        const today = new Date().toISOString().slice(0, 10);
+        let today = new Date();
+        today = new Date(`'${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'`).toISOString().slice(0,10);
         let nextWeek = new Date();
         nextWeek.setDate(nextWeek.getDate() + 7);
-        nextWeek = nextWeek.toISOString().slice(0, 10);
+        nextWeek = new Date(`'${nextWeek.getFullYear()}-${nextWeek.getMonth() + 1}-${nextWeek.getDate()}'`).toISOString().slice(0,10);
 
         // Update task and project indexes on each task item
         updateIndexes(projects.toDoList);
 
         // Build the task array for the DOM based on display mode
         if (taskDisplayMode === 'today') {
+            console.log(projects.toDoList[0].tasks[0].dueDate);
+            console.log(nextWeek);
             // Hide the add task button
             hideElements(addTaskButton);
 
@@ -232,6 +235,7 @@ const dom = (() => {
         showEditProjectDetails,
         showViewTaskDetails,
         createTaskElements,
+        updateIndexes,
     };
 })();
 

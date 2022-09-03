@@ -180,7 +180,7 @@ const handlers = (() => {
         // VIEW TASK DETAILS
         if (event.target.classList.contains('task-details-button')) {
             // Update the task index
-            taskIndex = event.target.parentElement.dataset.index;
+            taskIndex = event.target.parentElement.dataset.taskIndex;
             // Display the task modal
             dom.showElements(modal, modalViewInfo);
             // Populate the task modal with the selected task's data
@@ -200,6 +200,9 @@ const handlers = (() => {
 
         // EDIT TASK
         if (event.target.classList.contains('task-edit-button')) {
+            // Update add or edit mode
+            addOrEditMode = 'edit';
+            
             // Update the task edit index
             taskIndex = event.target.parentElement.dataset.index;
 
