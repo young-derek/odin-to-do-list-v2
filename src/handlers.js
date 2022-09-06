@@ -5,6 +5,7 @@ import projects from './projects.js';
 const handlers = (() => {
     const modal = document.querySelector('#modal');
     const modalHeaderTitle = document.querySelector('#modal-header-title');
+    const modalCloseButton = document.querySelector('#modal-close-button');
     const modalTitleDiv = document.querySelector('#modal-title-div');
     const modalButtons = document.querySelector('#modal-buttons');
     const modalSubmitButton = document.querySelector('#modal-submit-button');
@@ -124,7 +125,6 @@ const handlers = (() => {
             if (addOrEditMode === 'add project') {
                 // Push new project to the to do list array
                 projects.toDoList.push(projects.Project(modalTitleInput.value));
-
             } else if (addOrEditMode === 'edit project') {
                 // Replace selected project's title with new value
                 projects.toDoList[projectIndex].title = modalTitleInput.value;
@@ -149,33 +149,69 @@ const handlers = (() => {
                     taskIndex
                 );
             }
-            
+
             // Hide modal elements
             dom.hideElements(
                 modal,
                 modalTitleDiv,
                 modalSubmitButton,
                 modalTitleError,
-                modalTaskInput,
+                modalTaskInput
             );
 
             // Update UI
             dom.updateUi(projects.toDoList, taskDisplayMode, selectedProject);
-
         } else {
             modalTitleError.classList.remove('hide');
         }
     });
 
-    // ADD OR EDIT TASK
-    
-
     // MARK TASK AS COMPLETED - todo
-    // MODAL CLOSE BUTTON - todo
-    // CLICK OFF MODAL TO CLOSE MODAL - todo
+    // CLICK OFF MODAL TO CLOSE MODAL
+    modal.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (e.target === e.currentTarget) {
+            // Hide modal elements
+            dom.hideElements(
+                modal,
+                modalTitleDiv,
+                modalTitleError,
+                modalViewInfo,
+                modalSubmitButton,
+                modalTaskInput
+            );
+        }
+    });
+
+    // MODAL CLOSE BUTTON
+    modalCloseButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Hide modal elements
+        dom.hideElements(
+            modal,
+            modalTitleDiv,
+            modalTitleError,
+            modalViewInfo,
+            modalSubmitButton,
+            modalTaskInput
+        );
+    });
 
     // MODAL CANCEL BUTTON
-    modalCancelButton.addEventListener('click', (event) => {});
+    modalCancelButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Hide modal elements
+        dom.hideElements(
+            modal,
+            modalTitleDiv,
+            modalTitleError,
+            modalViewInfo,
+            modalSubmitButton,
+            modalTaskInput
+        );
+    });
 
     // PROJECT LIST HANDLERS
     projectList.addEventListener('click', (event) => {
@@ -221,12 +257,17 @@ const handlers = (() => {
 
             // Update project index
             projectIndex = event.target.parentElement.dataset.projectIndex;
-            
+
             // Update task index
             taskIndex = event.target.parentElement.dataset.taskIndex;
 
             // Show the edit project modal
-            dom.showElements(modal, modalTitleDiv, modalButtons, modalSubmitButton);
+            dom.showElements(
+                modal,
+                modalTitleDiv,
+                modalButtons,
+                modalSubmitButton
+            );
 
             // Pre-fill the project title input with the selected project's title
             dom.showEditProjectDetails(
