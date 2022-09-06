@@ -166,8 +166,6 @@ const handlers = (() => {
         }
     });
 
-    // MARK TASK AS COMPLETED - todo
-
     // CLICK OFF MODAL TO CLOSE MODAL
     modal.addEventListener('click', (e) => {
         e.preventDefault();
@@ -188,6 +186,7 @@ const handlers = (() => {
     // MODAL CLOSE BUTTON
     modalCloseButton.addEventListener('click', (e) => {
         e.preventDefault();
+        
         // Hide modal elements
         dom.hideElements(
             modal,
@@ -216,7 +215,7 @@ const handlers = (() => {
 
     // PROJECT LIST HANDLERS
     projectList.addEventListener('click', (event) => {
-        // SHOW A PROJECT'S TASKS, UPDATE SELECTED PROJECT
+        // CHANGE SELECTED PROJECT, SHOW A PROJECT'S TASKS
         if (event.target.classList.contains('project-title')) {
             // Set display mode to project
             taskDisplayMode = 'project';
@@ -251,7 +250,7 @@ const handlers = (() => {
             );
         }
 
-        // SHOW EDIT PROJECT MODAL, UPDATE EDIT INDEX
+        // DISPLAY EDIT PROJECT MODAL, UPDATE EDIT INDEX
         if (event.target.classList.contains('project-edit-button')) {
             // Update add or edit mode
             addOrEditMode = 'edit project';
@@ -295,6 +294,11 @@ const handlers = (() => {
                 selectedProject > projects.toDoList.length - 1
             ) {
                 selectedProject--;
+            }
+
+            // Hide the add new task button if there are no projects
+            if (projects.toDoList.length < 1) {
+                dom.hideElements(addTaskButton);
             }
 
             // Update the UI
