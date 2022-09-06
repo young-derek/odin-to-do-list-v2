@@ -43,12 +43,16 @@ header {
     min-height: calc(50vh - 4rem);
 }
 
-#projects-section-container *,
-#tasks-section-container * {
+#projects-section-container *
+{
     padding: 5px;
     margin: 2px;
 }
 
+#tasks-section-container *:not(.task-item) {
+    margin: 2px;
+    padding: 5px;
+}
 
 .project-item,
 .project-title,
@@ -71,11 +75,26 @@ header {
 }
 
 .task-item {
-    padding: 5px;
+    position: relative;
     background-color: var(--medium-light-neutral-color);
     display: grid;
     grid-template-columns: auto 1fr auto auto auto auto auto;
+    margin: 2px 2px 2px 18px;
+    padding: 5px;
+    box-shadow: -18px 0px 0px red;
 }
+
+.task-item::before {
+    position: absolute;
+    writing-mode: tb-rl;
+    transform: rotate(180deg);
+    left: -18px;
+    bottom: 0;
+    top: 0;
+    width: 18px;
+    text-align: center;
+}
+
 /*----- FOOTER -----*/
 footer {
     grid-row: 3 / 4;
@@ -125,6 +144,30 @@ footer {
 
 .completed .task-title {
     text-decoration: line-through;
+}
+
+.low-priority.task-item::before {
+    content: 'low';
+}
+
+.medium-priority.task-item::before {
+    content: 'mid';
+}
+
+.high-priority.task-item::before  {
+    content: 'high';
+}
+
+.low-priority {
+    box-shadow: -18px 0px 0px lightgreen;
+}
+
+.medium-priority {
+    box-shadow: -18px 0px 0px yellow;
+}
+
+.high-priority {
+    box-shadow: -18px 0px 0px lightcoral;
 }
 
 /*----- NARROW WIDTH -----*/

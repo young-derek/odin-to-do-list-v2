@@ -145,6 +145,15 @@ const dom = (() => {
                 taskEditButton.classList.add('task-edit-button');
                 taskRemoveButton.classList.add('task-remove-button');
 
+                // Add class based on priority level
+                if (task.priority === 'Low') {
+                    taskItem.classList.add('low-priority');
+                } else if (task.priority === 'Medium') {
+                    taskItem.classList.add('medium-priority');
+                } else if (task.priority === 'High') {
+                    taskItem.classList.add('high-priority');
+                }
+
                 taskTitle.textContent = task.title;
                 taskDueDate.textContent = task.dueDate;
                 taskDetailsButton.textContent = 'View Details';

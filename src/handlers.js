@@ -3,6 +3,7 @@ import tasks from './tasks.js';
 import projects from './projects.js';
 
 const handlers = (() => {
+    // Define DOM variables
     const modal = document.querySelector('#modal');
     const modalHeaderTitle = document.querySelector('#modal-header-title');
     const modalCloseButton = document.querySelector('#modal-close-button');
@@ -84,7 +85,7 @@ const handlers = (() => {
         modalHeaderTitle.textContent = 'Add Task';
     });
 
-    // SHOW TASKS DUE TODAY
+    // DISPLAY TASKS DUE TODAY
     tasksDueToday.addEventListener('click', () => {
         // Update task display mode
         taskDisplayMode = 'today';
@@ -100,7 +101,7 @@ const handlers = (() => {
         );
     });
 
-    // SHOW TASKS DUE THIS WEEK
+    // DISPLAY TASKS DUE THIS WEEK
     tasksDueThisWeek.addEventListener('click', () => {
         // Update task display mode
         taskDisplayMode = 'week';
@@ -186,7 +187,7 @@ const handlers = (() => {
     // MODAL CLOSE BUTTON
     modalCloseButton.addEventListener('click', (e) => {
         e.preventDefault();
-        
+
         // Hide modal elements
         dom.hideElements(
             modal,
