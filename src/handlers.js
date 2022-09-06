@@ -167,6 +167,7 @@ const handlers = (() => {
     });
 
     // MARK TASK AS COMPLETED - todo
+
     // CLICK OFF MODAL TO CLOSE MODAL
     modal.addEventListener('click', (e) => {
         e.preventDefault();
@@ -366,8 +367,11 @@ const handlers = (() => {
             // Update the task index
             taskIndex = event.target.parentElement.dataset.taskIndex;
 
+            // Update the project index
+            projectIndex = event.target.parentElement.dataset.projectIndex;
+
             // Remove the task from the selected project
-            projects.toDoList[selectedProject].tasks.splice(taskIndex, 1);
+            projects.toDoList[projectIndex].tasks.splice(taskIndex, 1);
 
             // Update the task list
             dom.createTaskElements(
@@ -375,6 +379,31 @@ const handlers = (() => {
                 taskDisplayMode,
                 selectedProject
             );
+        }
+
+        // MARK TASK AS COMPLETED
+        if (event.target.classList.contains('task-checkbox')) {
+            // Update the task index
+            taskIndex = event.target.parentElement.dataset.taskIndex;
+
+            // Update the project index
+            projectIndex = event.target.parentElement.dataset.projectIndex;
+
+            // Toggle the completed status and class on the task object
+            if (
+                projects.toDoList[projectIndex].tasks[taskIndex].completed ===
+                false
+            ) {
+                projects.toDoList[projectIndex].tasks[
+                    taskIndex
+                ].completed = true;
+                event.target.parentElement.classList.add('completed');
+            } else {
+                projects.toDoList[projectIndex].tasks[
+                    taskIndex
+                ].completed = false;
+                event.target.parentElement.classList.remove('completed');
+            }
         }
     });
 

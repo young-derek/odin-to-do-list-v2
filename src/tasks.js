@@ -16,9 +16,10 @@ const tasks = (() => {
             dueDate,
             priority,
             projectIndex,
-            taskIndex
+            taskIndex,
         );
         projects.toDoList[projectIndex].tasks.push(task);
+        console.log(task);
     }
 
     function editTask(

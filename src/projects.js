@@ -11,6 +11,7 @@ const projects = (() => {
                     priority: 'High',
                     taskIndex: 0,
                     projectIndex: 0,
+                    completed: false,
                 },
                 {
                     title: 'Donate clothes',
@@ -19,6 +20,7 @@ const projects = (() => {
                     priority: 'Low',
                     taskIndex: 1,
                     projectIndex: 0,
+                    completed: false,
                 },
             ],
         },
@@ -32,24 +34,24 @@ const projects = (() => {
                     priority: 'Medium',
                     taskIndex: 0,
                     projectIndex: 1,
+                    completed: false,
                 },
             ],
         },
     ];
 
-        function addProject() {}
-        function editProject() {}
-        function removeProject() {}
-
+    function addProject() {}
+    function editProject() {}
+    function removeProject() {}
 
     // PROJECT FACTORY FUNCTION
     const Project = (title) => {
         return {
             title,
             tasks: [],
-        }
+        };
     };
-    return {toDoList, Project};
+    return { toDoList, Project };
 })();
 
 export default projects;

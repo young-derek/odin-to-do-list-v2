@@ -153,6 +153,12 @@ const dom = (() => {
 
                 taskCheckbox.setAttribute('type', 'checkbox');
 
+                if (task.completed === true) {
+                    taskCheckbox.checked = true;
+                } else {
+                    taskCheckbox.checked = false;
+                }
+
                 taskItem.dataset.taskIndex = task.taskIndex;
                 taskItem.dataset.projectIndex = task.projectIndex;
 
