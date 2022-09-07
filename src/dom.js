@@ -3,16 +3,16 @@ import projects from './projects.js';
 
 const dom = (() => {
     // UPDATE UI
-    const updateUi = (toDoList, taskDisplayMode, selectedProject) => {
+    function updateUi(toDoList, taskDisplayMode, selectedProject) {
         // Update the project list
-        updateProjectListDisplay(toDoList);
+        updateProjectListDisplay(toDoList, taskDisplayMode, selectedProject);
 
         // Update the task list
         createTaskElements(toDoList, taskDisplayMode, selectedProject);
-    };
+    }
 
     // UPDATE PROJECT LIST DISPLAY
-    const updateProjectListDisplay = (toDoList) => {
+    function updateProjectListDisplay(toDoList, taskDisplayMode, selectedProject) {
         // Variable to track project index
         let projectIndex = 0;
 
@@ -32,10 +32,22 @@ const dom = (() => {
             projectEditButton.textContent = 'Edit';
             projectRemoveButton.textContent = 'Remove';
 
-            projectItem.classList.add('project-item');
+            projectItem.classList.add('project-item', 'not-selected');
             projectTitle.classList.add('project-title');
             projectEditButton.classList.add('project-edit-button');
             projectRemoveButton.classList.add('project-remove-button');
+
+            console.log(`projectindex: ${projectIndex}`);
+            console.log(`selectedproject: ${selectedProject}`);
+
+            if (
+                selectedProject == projectIndex &&
+                taskDisplayMode === 'project'
+            ) {
+                console.log('hello');
+                projectItem.classList.add('selected-project');
+                projectItem.classList.remove('not-selected');
+            }
 
             projectItem.dataset.projectIndex = projectIndex;
 
@@ -50,7 +62,7 @@ const dom = (() => {
             );
             projectList.append(projectItem);
         });
-    };
+    }
 
     // UPDATE TASK AND PROJECT INDEXES
     function updateIndexes(toDoList) {
@@ -243,6 +255,29 @@ const dom = (() => {
         modalTitleInput.value = toDoList[projectIndex].title;
     }
 
+    // UPDATE WHICH PROJECT HAS SELECTED PROJECT CLASS
+    function changeSelectedProjectClass(
+        tasksDueTodayNode,
+        tasksDueThisWeekNode,
+        projectsListContainer,
+        selectedProjectNode
+    ) {
+        // Create array of nodes to listen to
+        const nodeArray = [
+            tasksDueTodayNode,
+            tasksDueThisWeekNode,
+            ...projectsListContainer.children,
+        ];
+
+        // Remove selected project class from all project section elements
+        nodeArray.forEach((node) => {
+            node.classList.remove('selected-project');
+            node.classList.add('not-selected');
+        });
+        selectedProjectNode.classList.remove('not-selected');
+        selectedProjectNode.classList.add('selected-project');
+    }
+
     // Return functions
     return {
         updateUi,
@@ -254,6 +289,7 @@ const dom = (() => {
         showViewTaskDetails,
         createTaskElements,
         updateIndexes,
+        changeSelectedProjectClass,
     };
 })();
 

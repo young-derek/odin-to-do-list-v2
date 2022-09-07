@@ -14,12 +14,9 @@
             </header>
 
             <!-- PROJECTS -->
-            <section
-                id="projects-section-container"
-                class="hidden add-back-projects-section"
-            >
-                <h2 id="tasks-due-today">Today</h2>
-                <h2 id="tasks-due-this-week">This Week</h2>
+            <section id="projects-section-container">
+                <h2 id="tasks-due-today" class="not-selected">Today</h2>
+                <h2 id="tasks-due-this-week" class="not-selected">This Week</h2>
                 <h2 id="projects-section-header">Projects:</h2>
                 <button id="add-project-button">+ Add New Project</button>
                 <ul id="project-list"></ul>
@@ -51,7 +48,7 @@
                 <!-- MODAL CONTENT -->
                 <div id="modal-content">
                     <!-- TITLE INPUT -->
-                    <div id = 'modal-title-div' class="hide">
+                    <div id="modal-title-div" class="hide">
                         <label for="modal-title-input">Title</label>
                         <input
                             type="text"
@@ -59,6 +56,9 @@
                             name="modal-title-input"
                             autocomplete="off"
                         />
+                        <p id="modal-title-error" class="hide">
+                            This field is required.
+                        </p>
                     </div>
 
                     <!-- TASK INPUT -->
@@ -86,7 +86,7 @@
 
                         <!-- TASK PRIORITY -->
                         <div id="modal-task-priority-div">
-                            <label for="modal-task-priority-input"
+                            <label for="modal-task-priority-select"
                                 >Priority</label
                             >
                             <select
@@ -112,9 +112,7 @@
 
                         <!-- VIEW DESCRIPTION -->
                         <div id="modal-view-task-description-div">
-                            <p id="modal-view-task-description">
-                                Description
-                            </p>
+                            <p id="modal-view-task-description">Description</p>
                             <p id="modal-view-task-description-info">
                                 *insert description*
                             </p>
@@ -139,7 +137,9 @@
 
                     <!-- MODAL BUTTONS -->
                     <div id="modal-buttons">
-                        <button id="modal-submit-button" class="hide">Submit</button>
+                        <button id="modal-submit-button" class="hide">
+                            Submit
+                        </button>
                         <button id="modal-cancel-button">Cancel</button>
                     </div>
                 </div>

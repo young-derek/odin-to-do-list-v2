@@ -38,6 +38,9 @@ const handlers = (() => {
     );
     const addProjectButton = document.querySelector('#add-project-button');
     const addTaskButton = document.querySelector('#add-task-button');
+    const projectsSectionContainer = document.querySelector(
+        '#projects-section-container'
+    );
     const projectList = document.querySelector('#project-list');
     const tasksDueToday = document.querySelector('#tasks-due-today');
     const tasksDueThisWeek = document.querySelector('#tasks-due-this-week');
@@ -86,7 +89,7 @@ const handlers = (() => {
     });
 
     // DISPLAY TASKS DUE TODAY
-    tasksDueToday.addEventListener('click', () => {
+    tasksDueToday.addEventListener('click', (event) => {
         // Update task display mode
         taskDisplayMode = 'today';
 
@@ -99,10 +102,18 @@ const handlers = (() => {
             taskDisplayMode,
             selectedProject
         );
+
+        // Apply the selected project class to the chosen project, remove from others
+        dom.changeSelectedProjectClass(
+            tasksDueToday,
+            tasksDueThisWeek,
+            projectList,
+            event.target
+        );
     });
 
     // DISPLAY TASKS DUE THIS WEEK
-    tasksDueThisWeek.addEventListener('click', () => {
+    tasksDueThisWeek.addEventListener('click', (event) => {
         // Update task display mode
         taskDisplayMode = 'week';
 
@@ -114,6 +125,14 @@ const handlers = (() => {
             projects.toDoList,
             taskDisplayMode,
             selectedProject
+        );
+
+        // Apply the selected project class to the chosen project, remove from others
+        dom.changeSelectedProjectClass(
+            tasksDueToday,
+            tasksDueThisWeek,
+            projectList,
+            event.target
         );
     });
 
@@ -217,23 +236,7 @@ const handlers = (() => {
     // PROJECT LIST HANDLERS
     projectList.addEventListener('click', (event) => {
         // CHANGE SELECTED PROJECT, SHOW A PROJECT'S TASKS
-        if (event.target.classList.contains('project-title')) {
-            // Set display mode to project
-            taskDisplayMode = 'project';
-
-            // Display the add task button
-            dom.showElements(addTaskButton);
-
-            // Update selected project
-            selectedProject = event.target.parentElement.dataset.projectIndex;
-
-            // Update the task display
-            dom.createTaskElements(
-                projects.toDoList,
-                taskDisplayMode,
-                selectedProject
-            );
-        } else if (event.target.classList.contains('project-item')) {
+        if (event.target.classList.contains('project-item')) {
             // Set display mode to project
             taskDisplayMode = 'project';
 
@@ -248,6 +251,14 @@ const handlers = (() => {
                 projects.toDoList,
                 taskDisplayMode,
                 selectedProject
+            );
+
+            // Apply the selected project class to the chosen project, remove from others
+            dom.changeSelectedProjectClass(
+                tasksDueToday,
+                tasksDueThisWeek,
+                projectList,
+                event.target
             );
         }
 

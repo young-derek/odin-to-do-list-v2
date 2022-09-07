@@ -15,8 +15,8 @@
 
             <!-- PROJECTS -->
             <section id="projects-section-container">
-                <h2 id="tasks-due-today">Today</h2>
-                <h2 id="tasks-due-this-week">This Week</h2>
+                <h2 id="tasks-due-today" class="not-selected">Today</h2>
+                <h2 id="tasks-due-this-week" class="not-selected">This Week</h2>
                 <h2 id="projects-section-header">Projects:</h2>
                 <button id="add-project-button">+ Add New Project</button>
                 <ul id="project-list"></ul>
@@ -56,7 +56,9 @@
                             name="modal-title-input"
                             autocomplete="off"
                         />
-                        <p id="modal-title-error" class="hide">This field is required.</p>
+                        <p id="modal-title-error" class="hide">
+                            This field is required.
+                        </p>
                     </div>
 
                     <!-- TASK INPUT -->
